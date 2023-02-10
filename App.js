@@ -4,8 +4,8 @@ import { supabase } from './helpers/supabaseClient'
 import { StyleSheet, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native';
 
-import Login from './components/Login'
-import Account from './components/Account'
+import Login from './screens/Login'
+import Account from './screens/Account'
 import Tabs from './navigation/Tabs'
 
 export default function App() {
@@ -26,7 +26,8 @@ export default function App() {
       {session && session.user ? 
         <NavigationContainer>
           <Tabs />
-        </NavigationContainer> : 
+        </NavigationContainer>
+        : 
         <Login />}
     </View>
   )

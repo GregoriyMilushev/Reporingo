@@ -1,27 +1,25 @@
 import React from 'react'
-import { View, Text, Button } from 'react-native'
+import { View, Text, Button, TouchableOpacity, StyleSheet  } from 'react-native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { StyleSheet, View, Text, Alert, FlatList } from 'react-native'
+import {FirstScreenNavigator} from '../routes/homeStack'
 
-// components
-import Account from '../components/Account'
-import Events from '../components/Events'
-import CreateEventForm from '../components/CreateEventForm'
-
-const CustomHeader = ({ navigation, title }) => {
-  return (
-    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-      <Text>{title}</Text>
-      <Button title="Middle Button" onPress={() => {}} />
-    </View>
-  );
-};
+// screens
+import Account from '../screens/Account'
+import Events from '../screens/Events'
+import CreateEventForm from '../screens/CreateEventForm'
 
 const Tab = createBottomTabNavigator();
 
 export default function Tabs() {
+
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+    tabBarOptions={{
+      labelStyle: {fontSize:18},
+      activeTintColor: 'red',
+      inactiveTintColor: 'black'
+    }}
+    >
       <Tab.Screen 
         name="Profile" 
         component={Account}
@@ -29,11 +27,11 @@ export default function Tabs() {
           tabBarHideOnKeyboard: true,
         }}
         />
-      <Tab.Screen 
+      {/* <Tab.Screen 
         name="Create" 
         component={CreateEventForm}
-        />
-      <Tab.Screen name="Events" component={Events}/>
+        /> */}
+      <Tab.Screen options={{headerShown: false}} name="Events" component={FirstScreenNavigator}/>
     </Tab.Navigator>
   );
 }

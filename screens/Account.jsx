@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../helpers/supabaseClient'
 import { StyleSheet, View, Alert } from 'react-native'
 import { Button, Input } from 'react-native-elements'
-import Avatar from './Avatar'
+import Avatar from '../components/Avatar'
 
 export default function Account({ session }) {
   const [loading, setLoading] = useState(false)

@@ -1,8 +1,8 @@
 import { supabase } from '../helpers/supabaseClient'
-import { StyleSheet, View, Text, Alert, FlatList } from 'react-native'
+import { StyleSheet, View, Text, Alert, FlatList, TouchableOpacity } from 'react-native'
 import { useState, useEffect } from 'react'
 
-export default function Events() {
+export default function Events({navigation}) {
     // const [fetchError, setFetchError] = useState(null);
     const [events, setEvents] = useState(null);
 
@@ -13,11 +13,8 @@ export default function Events() {
             if (error) {
                 setEvents(null);
                 Alert.alert(error.message);
-                console.log(error, 'Heree');
             } else if (data) {
                 setEvents(data);
-                console.log(events, '222');
-                console.log(data, '11');
             }
         }
 
@@ -38,11 +35,18 @@ export default function Events() {
       );
 
     return (
-        <FlatList 
-            data={events} 
-            renderItem={({item}) => <Item item={item}/>}
-            ListEmptyComponent={EmptyMessage}
-        />
+        <View style={styles.buttonContainer}>
+            <FlatList 
+                data={events} 
+                renderItem={({item}) => <Item item={item}/>}
+                ListEmptyComponent={EmptyMessage}
+            />
+            <View style={styles.floatingButtonContainer}>
+            <TouchableOpacity style={styles.floatingButton} onPress={() => navigation.navigate('CreateEventForm')}>
+              <Text style={styles.floatingButtonText}>+</Text>
+            </TouchableOpacity>
+            </View>
+        </View>
     )
 }
 
@@ -55,11 +59,30 @@ const styles = StyleSheet.create({
       borderRadius: 15,
       borderWidth: 1,
       borderColor: '#fff',
-
-    //   alignItems: 'center'
     },
     title: {
         color: '#3c3c3b',
         fontSize : 18
-    }
+    },
+    buttonContainer: {
+        flex: 1,
+    },
+    floatingButtonContainer: {
+      position: 'absolute',
+      bottom: '5%',
+      right: '10%',
+      zIndex: 1,
+    },
+    floatingButton: {
+      width: 50,
+      height: 50,
+      backgroundColor: '#00a8e8',
+      borderRadius: 25,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    floatingButtonText: {
+      color: 'white',
+      fontSize: 24,
+    },
   })
