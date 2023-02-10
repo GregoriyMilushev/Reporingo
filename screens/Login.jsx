@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import { Alert, StyleSheet, View } from 'react-native'
-import { supabase } from '../helpers/supabaseClient'
-import { Button, Input } from 'react-native-elements'
+import React, { useState } from 'react';
+import { Alert, StyleSheet, View } from 'react-native';
+import { supabase } from '../helpers/supabaseClient';
+import { Button, Input } from 'react-native-elements';
 
 export default function Auth() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   async function signInWithEmail() {
-    setLoading(true)
+    setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
@@ -20,7 +20,7 @@ export default function Auth() {
   }
 
   async function signUpWithEmail() {
-    setLoading(true)
+    setLoading(true);
     const { error } = await supabase.auth.signUp({
       email: email,
       password: password,
@@ -60,7 +60,7 @@ export default function Auth() {
         <Button title="Sign up" disabled={loading} onPress={() => signUpWithEmail()} />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   mt20: {
     marginTop: 20,
   },
-})
+});
