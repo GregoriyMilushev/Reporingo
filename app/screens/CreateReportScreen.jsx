@@ -3,6 +3,7 @@ import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import Dropdown from '../components/Dropdown';
 import { Button } from 'react-native-elements';
 import { dataOne, dataThree, dataTwo } from '../dummyData';
+import SelectImage from '../components/ImagePicker';
 
 export default function CreateReportScreen() {
   const [selectedOne, setSelectedOne] = useState(undefined);
@@ -15,12 +16,13 @@ export default function CreateReportScreen() {
   };
 
   const onSubmit = () => {
-    const formData = {
-      first: selectedOne.value,
-      second: selectedTwo.value,
-      three: selectedThree.value,
-      comment: text,
-    };
+    // const formData = {
+
+    //   first: selectedOne.value,
+    //   second: selectedTwo.value,
+    //   three: selectedThree.value,
+    //   comment: text,
+    // };
 
     Alert.alert(`Form Submitted`);
   };
@@ -66,6 +68,11 @@ export default function CreateReportScreen() {
             value={text}
             placeholder="Add comment..."
           />
+        </View>
+
+        <View style={styles.imagePicker}>
+          <Text style={styles.label}>Image label</Text>
+          <SelectImage></SelectImage>
         </View>
       </View>
 
@@ -123,4 +130,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignSelf: 'center',
   },
+
+  imagePicker: { height: 60, width: '95%', alignSelf: 'center' },
 });

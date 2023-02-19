@@ -33,5 +33,6 @@
         "projectId": "5bf0e889-a25f-4f22-b8b9-89ad75fc29f5"
       }
     }
-  }
+  },
+  "plugins": ["expo-image-picker"]
 }
