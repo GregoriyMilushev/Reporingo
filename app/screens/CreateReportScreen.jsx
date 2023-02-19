@@ -1,53 +1,34 @@
 import { useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import Dropdown from '../components/Dropdown';
 import { Button } from 'react-native-elements';
+import { dataOne, dataThree, dataTwo } from '../dummyData';
 
 export default function CreateReportScreen() {
   const [selectedOne, setSelectedOne] = useState(undefined);
   const [selectedTwo, setSelectedTwo] = useState(undefined);
   const [selectedThree, setSelectedThree] = useState(undefined);
+  const [text, setText] = useState('');
 
-  const dataOne = [
-    { label: 'A1', value: 'A1' },
-    { label: 'A2', value: 'A2' },
-    { label: 'A3', value: 'A3' },
-    { label: 'A4', value: 'A4' },
-    { label: 'A5', value: 'A5' },
-    { label: 'A6', value: 'A6' },
-    { label: 'A7', value: 'A7' },
-    { label: 'A8', value: 'A8' },
-    { label: 'A9', value: 'A9' },
-  ];
+  const handleTextChange = (newText) => {
+    setText(newText);
+  };
 
-  const dataTwo = [
-    { label: 'B1', value: 'B1' },
-    { label: 'B2', value: 'B2' },
-    { label: 'B3', value: 'B3' },
-    { label: 'B4', value: 'B4' },
-    { label: 'B5', value: 'B5' },
-    { label: 'B6', value: 'B6' },
-    { label: 'B7', value: 'B7' },
-    { label: 'B8', value: 'B8' },
-    { label: 'B9', value: 'B9' },
-  ];
+  const onSubmit = () => {
+    const formData = {
+      first: selectedOne.value,
+      second: selectedTwo.value,
+      three: selectedThree.value,
+      comment: text,
+    };
 
-  const dataThree = [
-    { label: 'C1', value: 'C1' },
-    { label: 'C2', value: 'C2' },
-    { label: 'C3', value: 'C3' },
-    { label: 'C4', value: 'C4' },
-    { label: 'C5', value: 'C5' },
-    { label: 'C6', value: 'C6' },
-    { label: 'C7', value: 'C7' },
-    { label: 'C8', value: 'C8' },
-    { label: 'C9', value: 'C9' },
-  ];
+    Alert.alert(`Form Submitted`);
+  };
 
   return (
     <View style={styles.container}>
       <View>
-        <View style={styles.dropdown}>
+        <View style={[styles.dropdown, styles.dropdownFirst]}>
           <Text style={styles.label}>First Label</Text>
           <Dropdown
             label="Select Item"
@@ -76,6 +57,16 @@ export default function CreateReportScreen() {
             selected={selectedThree}
           />
         </View>
+
+        <View style={styles.dropdown}>
+          <Text style={styles.label}>Comment Label</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={handleTextChange}
+            value={text}
+            placeholder="Add comment..."
+          />
+        </View>
       </View>
 
       <Button
@@ -91,15 +82,20 @@ export default function CreateReportScreen() {
           paddingHorizontal: 20,
           marginBottom: 40,
         }}
-        onPress={() => Alert.alert('Form Submitted')}
+        onPress={onSubmit}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  dropdownFirst: {
+    marginTop: 40,
+    alignItems: 'center',
+    textAlign: 'left',
+  },
   dropdown: {
-    marginTop: 50,
+    marginTop: 25,
     alignItems: 'center',
     textAlign: 'left',
   },
@@ -112,6 +108,19 @@ const styles = StyleSheet.create({
 
   label: {
     color: 'white',
-    textAlign: 'left',
+    marginBottom: 10,
+    marginEnd: 'auto',
+    paddingLeft: 10,
+  },
+
+  input: {
+    backgroundColor: '#efefef',
+    height: 50,
+    width: '95%',
+    borderWidth: 1,
+    borderColor: 'gray',
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    alignSelf: 'center',
   },
 });

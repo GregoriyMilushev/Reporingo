@@ -45,20 +45,6 @@ const Dropdown = ({ label, data, onSelect, selected }) => {
 
   const renderDropdown = () => {
     return (
-      //   <Modal visible={visible} transparent animationType="none">
-      //     <TouchableOpacity style={styles.overlay} onPress={() => setVisible(false)}>
-      //       <View style={[styles.dropdown, { top: dropdownTop }]}>
-      //         <FlatList
-      //           data={data}
-      //           renderItem={renderItem}
-      //           keyExtractor={(item, index) => index.toString()}
-      //           contentContainerStyle={{
-      //             flexGrow: 1,
-      //           }}
-      //         />
-      //       </View>
-      //     </TouchableOpacity>
-      //   </Modal>
       <Modal visible={visible} transparent animationType="none">
         <View style={styles.overlay} onPress={() => setVisible(false)}>
           <ScrollView>
