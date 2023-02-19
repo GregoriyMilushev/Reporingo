@@ -1,36 +1,37 @@
-import 'react-native-url-polyfill/auto'
-import { useState, useEffect } from 'react'
-import { supabase } from './helpers/supabaseClient'
-import { StyleSheet, View } from 'react-native'
+import 'react-native-url-polyfill/auto';
+import { useState, useEffect } from 'react';
+import { supabase } from './helpers/supabaseClient';
+import { StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
-import Login from './screens/Login'
-import Account from './screens/Account'
-import Tabs from './navigation/Tabs'
+import Login from './app/screens/Login';
+import Account from './app/screens/Account';
+import Tabs from './navigation/Tabs';
 
 export default function App() {
-  const [session, setSession] = useState(null)
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-    })
+      setSession(session);
+    });
 
     supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
-  }, [])
+      setSession(session);
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
-      {session && session.user ? 
+      {session && session.user ? (
         <NavigationContainer>
           <Tabs />
         </NavigationContainer>
-        : 
-        <Login />}
+      ) : (
+        <Login />
+      )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -38,5 +39,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     // alignItems: 'center',
-  }
-})
+  },
+});
