@@ -1,23 +1,17 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from '@react-navigation/stack';
 
-import Events from "../screens/Events";
-import CreateEventForm from '../screens/CreateEventForm'
+import Events from '../app/screens/Events';
+import CreateEventForm from '../app/screens/CreateEventForm';
 
 const Stack = createStackNavigator();
 
 const FirstScreenNavigator = () => {
-    return (
-      <Stack.Navigator > 
-         <Stack.Screen
-          name="Events"
-          component={Events}
-        />
-         <Stack.Screen
-          name="CreateEventForm"
-          component={CreateEventForm}
-        />
-      </Stack.Navigator>
-    );
-}
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Events" component={Events} />
+      <Stack.Screen name="CreateEventForm" component={CreateEventForm} />
+    </Stack.Navigator>
+  );
+};
 
-export {FirstScreenNavigator};
+export { FirstScreenNavigator };
