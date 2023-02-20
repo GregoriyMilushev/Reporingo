@@ -1,80 +1,62 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../helpers/supabaseClient'
-import { StyleSheet, View, Alert, Image, Button } from 'react-native'
-import DocumentPicker, { isCancel, isInProgress, types } from 'react-native-document-picker'
+import { useState, useEffect } from 'react';
+import { supabase } from '../helpers/supabaseClient';
+import { StyleSheet, View, Alert, Image, Button } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Avatar({ url, size = 150, onUpload }) {
-  const [uploading, setUploading] = useState(false)
-  const [avatarUrl, setAvatarUrl] = useState(null)
-  const avatarSize = { height: size, width: size }
+  const [uploading, setUploading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState(null);
+  const avatarSize = { height: size, width: size };
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
-    if (url) downloadImage(url)
-  }, [url])
+    if (url) downloadImage(url);
+  }, [url]);
 
   async function downloadImage(path) {
     try {
-      const { data, error } = await supabase.storage.from('avatars').download(path)
+      const { data, error } = await supabase.storage.from('avatars').download(path);
 
       if (error) {
-        throw error
+        throw error;
       }
 
       const fr = new FileReader();
       fr.readAsDataURL(data);
       fr.onload = () => {
-        setAvatarUrl(fr.result)
-      }
+        setAvatarUrl(fr.result);
+      };
     } catch (error) {
       if (error instanceof Error) {
-        console.log('Error downloading image: ', error.message)
+        console.log('Error downloading image: ', error.message);
       }
     }
   }
 
   async function uploadAvatar() {
-    try {
-      setUploading(true);
-      // console.log('herree');
-      const file = await DocumentPicker.pick({
-        presentationStyle: 'fullScreen',
-        copyTo: 'cachesDirectory',
-        type: types.images,
-        mode: 'open',
+    let { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Sorry, we need media library permissions to make this work!');
+      return;
+    }
+
+    let photo = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      quality: 1,
+    });
+
+    console.log(photo);
+    if (!photo.canceled) {
+      const fileName = photo.assets[0].uri.substring(photo.assets[0].uri.lastIndexOf('/') + 1);
+
+      const { data, error } = await supabase.storage.from('images').upload(fileName, photo, {
+        cacheControl: '3600',
+        upsert: false,
       });
-      // console.log('ssss');
-      const photo = {
-        uri: file.fileCopyUri,
-        type: file.type,
-        name: file.name,
-      };
-
-      const formData = new FormData();
-      formData.append('file', photo);
-
-      const fileExt = file.name.split('.').pop()
-      const filePath = `${Math.random()}.${fileExt}`
-
-      let { error } = await supabase.storage.from('avatars').upload(filePath, formData)
 
       if (error) {
-        throw error
+        throw new Error(error.message);
       }
-
-      onUpload(filePath)
-    } catch (error) {
-      if (isCancel(error)) {
-        console.warn('cancelled')
-        // User cancelled the picker, exit any dialogs or menus and move on
-      } else if (isInProgress(error)) {
-        console.warn('multiple pickers were opened, only the last will be considered')
-      } else if (error instanceof Error) {
-        Alert.alert(error.message)
-      } else {
-        throw error
-      }
-    } finally {
-      setUploading(false)
     }
   }
 
@@ -92,12 +74,12 @@ export default function Avatar({ url, size = 150, onUpload }) {
       <View>
         <Button
           title={uploading ? 'Uploading ...' : 'Upload'}
-          onPress={uploadAvatar}
+          onPress={() => uploadAvatar()}
           disabled={uploading}
         />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -115,4 +97,4 @@ const styles = StyleSheet.create({
     border: '1px solid rgb(200, 200, 200)',
     borderRadius: 5,
   },
-})
+});
