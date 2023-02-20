@@ -1,33 +1,38 @@
 {
   "expo": {
-    "name": "AwesomeProject",
+    "name": "Reportingo",
     "slug": "AwesomeProject",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./app/assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./app/assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#161D23"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./app/assets/adaptive-icon.png",
+        "backgroundColor": "#161D23"
+      },
+      "package": "com.idoomguy.AwesomeProject"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./app/assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5bf0e889-a25f-4f22-b8b9-89ad75fc29f5"
+      }
     }
-  }
+  },
+  "plugins": ["expo-image-picker"]
 }
