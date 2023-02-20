@@ -1,25 +1,9 @@
-import { supabase } from '../../helpers/supabaseClient';
 import { StyleSheet, View, Text, Alert, FlatList, TouchableOpacity } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { reportsData } from '../dummyData';
 
-export default function Events({ navigation }) {
-  // const [fetchError, setFetchError] = useState(null);
+export default function ReportsDashboardScreen({ navigation }) {
   const [events, setEvents] = useState(null);
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const { data, error } = await supabase.from('events').select();
-
-      if (error) {
-        setEvents(null);
-        Alert.alert(error.message);
-      } else if (data) {
-        setEvents(data);
-      }
-    };
-
-    fetchEvents();
-  }, []);
 
   const Item = ({ item }) => (
     <View style={styles.container}>
@@ -37,14 +21,14 @@ export default function Events({ navigation }) {
   return (
     <View style={styles.buttonContainer}>
       <FlatList
-        data={events}
+        data={reportsData}
         renderItem={({ item }) => <Item item={item} />}
         ListEmptyComponent={EmptyMessage}
       />
       <View style={styles.floatingButtonContainer}>
         <TouchableOpacity
           style={styles.floatingButton}
-          onPress={() => navigation.navigate('CreateEventForm')}
+          onPress={() => navigation.navigate('CreateReportScreen')}
         >
           <Text style={styles.floatingButtonText}>+</Text>
         </TouchableOpacity>
