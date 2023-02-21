@@ -66,7 +66,7 @@ export default function CreateReportScreen() {
       Alert.alert('Report create failed. Please try again.');
     } else {
       Alert.alert(`Form submitted successfully.`);
-      // resetForm();
+      resetForm();
     }
   };
 
