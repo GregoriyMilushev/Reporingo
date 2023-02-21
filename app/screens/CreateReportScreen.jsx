@@ -23,12 +23,17 @@ export default function CreateReportScreen() {
   };
 
   const uploadImage = async () => {
-    const fileName = `${Date.now()}.jpg`;
-    console.log(image);
+    try {
+      const fileName = `${Date.now()}.jpg`;
+      // console.log(JSON.stringify(image), 2);
 
-    let { data, error } = await Image.upload({ fileName, image });
+      let { data, error } = await Image.upload({ fileName, image });
 
-    return { imageData: data, imageError: error };
+      return { imageData: data, imageError: error };
+    } catch (error) {
+      Alert.alert('Upload image failed. Please try again.');
+      return { imageError: true };
+    }
   };
 
   const resetForm = () => {
@@ -43,7 +48,6 @@ export default function CreateReportScreen() {
     const { imageData, imageError } = await uploadImage();
 
     if (imageError) {
-      Alert.alert('Image upload not successful. Please try again.');
       return;
     }
 
@@ -52,7 +56,8 @@ export default function CreateReportScreen() {
       selectedTwo,
       selectedThree,
       text,
-      imagePath: imageData.path,
+      // imagePath: imageData.path,
+      imagePath: '',
     };
 
     const { data, error } = await Report.create(report);
@@ -61,7 +66,7 @@ export default function CreateReportScreen() {
       Alert.alert('Report create failed. Please try again.');
     } else {
       Alert.alert(`Form submitted successfully.`);
-      resetForm();
+      // resetForm();
     }
   };
 

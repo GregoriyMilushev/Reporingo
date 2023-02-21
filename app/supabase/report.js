@@ -1,4 +1,4 @@
-import { supabase } from '../supabase/supabaseClient';
+import { supabase } from './supabaseClient';
 
 async function create(report) {
   const { selectedOne, selectedTwo, selectedThree, text, imagePath } = report;
