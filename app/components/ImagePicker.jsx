@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 
-const SelectImage = () => {
-  const [image, setImage] = useState(null);
-
+const SelectImage = ({ onChange }) => {
   const pickImageFromGallery = async () => {
+    // Give Access to phone galery
+    // let { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    // if (status !== 'granted') {
+    //   alert('Sorry, we need media library permissions to make this work!');
+    //   return;
+    // }
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 1,
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      onChange(result);
+      // setImage(result);
+      //.assets[0].uri
     }
   };
 
@@ -23,7 +30,9 @@ const SelectImage = () => {
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      onChange(image);
+      // setImage(result);
+      //.assets[0].uri
     }
   };
 
@@ -65,7 +74,7 @@ const SelectImage = () => {
           onPress={takePhoto}
         />
       </View>
-      {image && <Image source={{ uri: image }} style={styles.image} />}
+      {/* {image && <Image source={{ uri: image }} style={styles.image} />} */}
     </View>
   );
 };
