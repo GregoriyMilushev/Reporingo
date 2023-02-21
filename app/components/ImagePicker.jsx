@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 
 const SelectImage = ({ onChange }) => {
   const pickImageFromGallery = async () => {
@@ -12,35 +13,51 @@ const SelectImage = ({ onChange }) => {
     //   return;
     // }
 
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      quality: 1,
-    });
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        quality: 1,
+      });
 
-    if (!result.canceled) {
-      onChange(convertUriToBlob(result.assets[0].uri));
-      // setImage(result);
-      //.assets[0].uri
+      if (!result.canceled) {
+        const bytes = await convertUriToBytes(result.assets[0].uri);
+        onChange(bytes);
+      }
+    } catch (error) {
+      Alert.alert('There was problem handling your image. Please try again.');
     }
   };
 
   const takePhoto = async () => {
-    let result = await ImagePicker.launchCameraAsync({
-      quality: 1,
-    });
+    try {
+      let result = await ImagePicker.launchCameraAsync({
+        quality: 1,
+      });
 
-    if (!result.canceled) {
-      onChange(convertUriToBlob(result.assets[0].uri));
-      // setImage(result);
-      //.assets[0].uri
+      if (!result.canceled) {
+        const bytes = await convertUriToBytes(result.assets[0].uri);
+        onChange(bytes);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('There was problem handling your image. Please try again.');
     }
   };
 
-  const convertUriToBlob = async (uri) => {
-    const response = await fetch(uri);
-    const blob = await response.blob();
-
-    return blob;
+  const convertUriToBytes = async (fileUri) => {
+    try {
+      const binaryString = await FileSystem.readAsStringAsync(fileUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error converting URI to buffer');
+    }
   };
 
   return (
