@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import { dataOne, dataThree, dataTwo } from '../dummyData';
 import SelectImage from '../components/ImagePicker';
 import Report from '../supabase/report';
-import Image from '../supabase/image';
+import Storage from '../supabase/storage';
 
 export default function CreateReportScreen() {
   const [selectedOne, setSelectedOne] = useState(undefined);
@@ -13,6 +13,7 @@ export default function CreateReportScreen() {
   const [selectedThree, setSelectedThree] = useState(undefined);
   const [image, setImage] = useState(undefined);
   const [text, setText] = useState('');
+  const [testImage, setTestImage] = useState(undefined);
 
   const handleTextChange = (newText) => {
     setText(newText);
@@ -27,7 +28,7 @@ export default function CreateReportScreen() {
       const fileName = `${Date.now()}.jpg`;
       // console.log(JSON.stringify(image), 2);
 
-      let { data, error } = await Image.upload({ fileName, image });
+      let { data, error } = await Storage.uploadImage({ fileName, image });
 
       return { imageData: data, imageError: error };
     } catch (error) {
@@ -56,8 +57,7 @@ export default function CreateReportScreen() {
       selectedTwo,
       selectedThree,
       text,
-      // imagePath: imageData.path,
-      imagePath: '',
+      imagePath: imageData.path,
     };
 
     const { data, error } = await Report.create(report);
