@@ -1,15 +1,24 @@
 import { StyleSheet, View, Text, Alert, FlatList, TouchableOpacity } from 'react-native';
-import { useState } from 'react';
-import { reportsData } from '../dummyData';
+import { useState, useEffect } from 'react';
+import Report from '../supabase/report';
 
 export default function ReportsDashboardScreen({ navigation }) {
-  const [events, setEvents] = useState(null);
+  const [reports, setReports] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      let reports = await Report.getAll();
+      setReports(reports);
+    })();
+  }, []);
 
   const Item = ({ item }) => (
     <View style={styles.container}>
-      <Text style={styles.title}>{item.createdDate}</Text>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={{ color: '#3c3c3b' }}>{item.description}</Text>
+      <Text style={styles.title}>{item.created_at}</Text>
+      <Text style={styles.title}>{item.first}</Text>
+      <Text style={styles.title}>{item.second}</Text>
+      <Text style={styles.title}>{item.third}</Text>
+      <Text style={styles.title}>{item.comment}</Text>
     </View>
   );
 
@@ -22,7 +31,7 @@ export default function ReportsDashboardScreen({ navigation }) {
   return (
     <View style={styles.buttonContainer}>
       <FlatList
-        data={reportsData}
+        data={reports}
         renderItem={({ item }) => <Item item={item} />}
         ListEmptyComponent={EmptyMessage}
       />

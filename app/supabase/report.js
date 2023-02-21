@@ -14,8 +14,14 @@ async function create(report) {
   ]);
 }
 
+async function getAll() {
+  let { data: reports, error } = await supabase.from('reports').select('*');
+  return reports;
+}
+
 const Report = {
   create,
+  getAll,
 };
 
 export default Report;
