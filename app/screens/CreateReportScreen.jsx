@@ -4,7 +4,8 @@ import Dropdown from '../components/Dropdown';
 import { Button } from 'react-native-elements';
 import { dataOne, dataThree, dataTwo } from '../dummyData';
 import SelectImage from '../components/ImagePicker';
-import { supabase } from '../helpers/supabaseClient';
+import Report from '../supabase/report';
+import Image from '../supabase/image';
 
 export default function CreateReportScreen() {
   const [selectedOne, setSelectedOne] = useState(undefined);
@@ -19,41 +20,22 @@ export default function CreateReportScreen() {
 
   const onUploadImage = (newImage) => {
     setImage(newImage);
-    console.log(image, 'The Image');
-  };
-
-  const uploadImageInStorage = async () => {
-    // TODO:Add filename!!!
-    const { data, error } = await supabase.storage.from('images').upload(fileName, photo, {
-      cacheControl: '3600',
-      upsert: false,
-    });
-
-    if (error) {
-      // throw new Error(error.message);
-      Alert.alert(error.message);
-    }
-
-    return data;
   };
 
   const onSubmit = async () => {
-    console.log('HERE Submit');
-    const imagePath = uploadImageInStorage();
-    console.log(imagePath, 'Image PAth');
-    let { data, error } = await supabase
-      .from('events')
-      .insert([
-        {
-          first: selectedOne,
-          second: selectedTwo,
-          third: selectedThree,
-          comment: text,
-          image_url: imagePath,
-        },
-      ])
-      .select();
+    const fileName = `${Date.now()}.png`;
+    let { data, error } = await Image.upload({ fileName, image });
     console.log(data);
+
+    const report = {
+      selectedOne,
+      selectedTwo,
+      selectedThree,
+      text,
+      imagePath,
+    };
+
+    // { data, error } = await Report.create(report);
 
     if (error) {
       Alert.alert(error.message);

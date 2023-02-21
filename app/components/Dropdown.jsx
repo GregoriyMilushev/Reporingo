@@ -37,7 +37,10 @@ const Dropdown = ({ label, data, onSelect, selected }) => {
 
   const renderItem = ({ item }) => (
     // <View style={styles.item} onPress={() => onItemPress(item)}>
-    <TouchableWithoutFeedback onPress={() => onItemPress(item)}>
+    <TouchableWithoutFeedback
+      key={(Math.random() + 1).toString(36).substring(7)}
+      onPress={() => onItemPress(item)}
+    >
       <Text style={styles.item}>{item.label}</Text>
     </TouchableWithoutFeedback>
     // {/* </View> */}
@@ -49,14 +52,15 @@ const Dropdown = ({ label, data, onSelect, selected }) => {
         <View style={styles.overlay} onPress={() => setVisible(false)}>
           <ScrollView>
             <View onStartShouldSetResponder={() => true}>
-              <FlatList
+              {/* <FlatList
                 data={data}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
                 contentContainerStyle={{
                   flexGrow: 1,
                 }}
-              />
+              /> */}
+              {data.map((item) => renderItem({ item }))}
             </View>
           </ScrollView>
         </View>
