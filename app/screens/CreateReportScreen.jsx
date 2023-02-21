@@ -18,29 +18,50 @@ export default function CreateReportScreen() {
     setText(newText);
   };
 
-  const onUploadImage = (newImage) => {
+  const selectImage = (newImage) => {
     setImage(newImage);
   };
 
-  const onSubmit = async () => {
-    const fileName = `${Date.now()}.png`;
+  const uploadImage = async () => {
+    const fileName = `${Date.now()}.jpg`;
+    console.log(image);
+
     let { data, error } = await Image.upload({ fileName, image });
-    console.log(data);
+
+    return { imageData: data, imageError: error };
+  };
+
+  const resetForm = () => {
+    setSelectedOne(undefined);
+    setSelectedTwo(undefined);
+    setSelectedThree(undefined);
+    setImage(undefined);
+    setText('');
+  };
+
+  const onSubmit = async () => {
+    const { imageData, imageError } = await uploadImage();
+
+    if (imageError) {
+      Alert.alert('Image upload not successful. Please try again.');
+      return;
+    }
 
     const report = {
       selectedOne,
       selectedTwo,
       selectedThree,
       text,
-      imagePath,
+      imagePath: imageData.path,
     };
 
-    // { data, error } = await Report.create(report);
+    const { data, error } = await Report.create(report);
 
     if (error) {
-      Alert.alert(error.message);
+      Alert.alert('Report create failed. Please try again.');
     } else {
-      Alert.alert(`Form Submitted`);
+      Alert.alert(`Form submitted successfully.`);
+      resetForm();
     }
   };
 
@@ -89,7 +110,7 @@ export default function CreateReportScreen() {
 
         <View style={styles.imagePicker}>
           <Text style={styles.label}>Image label</Text>
-          <SelectImage onChange={onUploadImage}></SelectImage>
+          <SelectImage onChange={selectImage}></SelectImage>
         </View>
       </View>
 

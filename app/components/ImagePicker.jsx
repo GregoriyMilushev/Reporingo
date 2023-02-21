@@ -18,7 +18,7 @@ const SelectImage = ({ onChange }) => {
     });
 
     if (!result.canceled) {
-      onChange(result);
+      onChange(convertUriToBlob(result.assets[0].uri));
       // setImage(result);
       //.assets[0].uri
     }
@@ -30,10 +30,17 @@ const SelectImage = ({ onChange }) => {
     });
 
     if (!result.canceled) {
-      onChange(image);
+      onChange(convertUriToBlob(result.assets[0].uri));
       // setImage(result);
       //.assets[0].uri
     }
+  };
+
+  const convertUriToBlob = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    return blob;
   };
 
   return (
