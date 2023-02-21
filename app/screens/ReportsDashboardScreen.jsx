@@ -7,6 +7,7 @@ export default function ReportsDashboardScreen({ navigation }) {
 
   const Item = ({ item }) => (
     <View style={styles.container}>
+      <Text style={styles.title}>{item.createdDate}</Text>
       <Text style={styles.title}>{item.title}</Text>
       <Text style={{ color: '#3c3c3b' }}>{item.description}</Text>
     </View>
@@ -52,6 +53,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   buttonContainer: {
+    backgroundColor: '#3c3c3b',
     flex: 1,
   },
   floatingButtonContainer: {
