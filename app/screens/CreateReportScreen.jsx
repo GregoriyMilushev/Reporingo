@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import Dropdown from '../components/Dropdown';
 import { Button } from 'react-native-elements';
 import { dataOne, dataThree, dataTwo } from '../dummyData';
@@ -57,8 +65,8 @@ export default function CreateReportScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
+    <KeyboardAvoidingView style={styles.container}>
+      <ScrollView style={styles.form}>
         <View style={[styles.dropdown, styles.dropdownFirst]}>
           <Text style={styles.label}>First Label</Text>
           <Dropdown
@@ -103,7 +111,7 @@ export default function CreateReportScreen() {
           <Text style={styles.label}>Image label</Text>
           <SelectImage onChange={selectImage}></SelectImage>
         </View>
-      </View>
+      </ScrollView>
 
       <Button
         title="SUBMIT REPORT"
@@ -117,14 +125,20 @@ export default function CreateReportScreen() {
           width: '100%',
           paddingHorizontal: 20,
           marginBottom: 40,
+          marginTop: 20,
         }}
         onPress={onSubmit}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  form: {
+    marginBottom: 40,
+    paddingBottom: 20,
+  },
+
   dropdownFirst: {
     marginTop: 40,
     alignItems: 'center',
@@ -160,5 +174,5 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  imagePicker: { height: 60, width: '95%', alignSelf: 'center' },
+  imagePicker: { height: 60, width: '95%', alignSelf: 'center', paddingBottom: 10 },
 });
