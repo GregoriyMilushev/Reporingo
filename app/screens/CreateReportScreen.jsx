@@ -21,6 +21,7 @@ export default function CreateReportScreen() {
   const [selectedThree, setSelectedThree] = useState(undefined);
   const [image, setImage] = useState(undefined);
   const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleTextChange = (newText) => {
     setText(newText);
@@ -39,11 +40,15 @@ export default function CreateReportScreen() {
   };
 
   const onSubmit = async () => {
-    const imageUrl = await Storage.uploadImage(image);
+    setLoading(true);
+    let imageUrl;
+    if (image) {
+      imageUrl = await Storage.uploadImage(image);
 
-    if (!imageUrl) {
-      Alert.alert('There was an error uploading the image. Please try again.');
-      return;
+      if (!imageUrl) {
+        Alert.alert('There was an error uploading the image. Please try again.');
+        return;
+      }
     }
 
     const report = {
@@ -51,7 +56,7 @@ export default function CreateReportScreen() {
       selectedTwo,
       selectedThree,
       text,
-      imageUrl: imageUrl.publicUrl,
+      imageUrl: imageUrl ? imageUrl.publicUrl : '',
     };
 
     const { data, error } = await Report.create(report);
@@ -62,6 +67,7 @@ export default function CreateReportScreen() {
       Alert.alert(`Form submitted successfully.`);
       resetForm();
     }
+    setLoading(false);
   };
 
   return (
@@ -115,6 +121,7 @@ export default function CreateReportScreen() {
 
       <Button
         title="SUBMIT REPORT"
+        loading={loading}
         buttonStyle={{
           backgroundColor: '#82c773',
           borderRadius: 3,
