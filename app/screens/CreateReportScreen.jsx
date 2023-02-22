@@ -13,28 +13,13 @@ export default function CreateReportScreen() {
   const [selectedThree, setSelectedThree] = useState(undefined);
   const [image, setImage] = useState(undefined);
   const [text, setText] = useState('');
-  const [testImage, setTestImage] = useState(undefined);
 
   const handleTextChange = (newText) => {
     setText(newText);
   };
 
-  const selectImage = (newImage) => {
-    setImage(newImage);
-  };
-
-  const uploadImage = async () => {
-    try {
-      const fileName = `${Date.now()}.jpg`;
-      // console.log(JSON.stringify(image), 2);
-
-      let { data, error } = await Storage.uploadImage({ fileName, image });
-
-      return { imageData: data, imageError: error };
-    } catch (error) {
-      Alert.alert('Upload image failed. Please try again.');
-      return { imageError: true };
-    }
+  const selectImage = (image) => {
+    setImage(image);
   };
 
   const resetForm = () => {
@@ -46,9 +31,10 @@ export default function CreateReportScreen() {
   };
 
   const onSubmit = async () => {
-    const { imageData, imageError } = await uploadImage();
+    const imageUrl = await Storage.uploadImage(image);
 
-    if (imageError) {
+    if (!imageUrl) {
+      Alert.alert('There was an error uploading the image. Please try again.');
       return;
     }
 
@@ -57,7 +43,7 @@ export default function CreateReportScreen() {
       selectedTwo,
       selectedThree,
       text,
-      imagePath: imageData.path,
+      imageUrl: imageUrl.publicUrl,
     };
 
     const { data, error } = await Report.create(report);

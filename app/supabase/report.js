@@ -1,7 +1,7 @@
 import { supabase } from './supabaseClient';
 
 async function create(report) {
-  const { selectedOne, selectedTwo, selectedThree, text, imagePath } = report;
+  const { selectedOne, selectedTwo, selectedThree, text, imageUrl } = report;
 
   return supabase.from('reports').insert([
     {
@@ -9,7 +9,7 @@ async function create(report) {
       second: selectedTwo.value,
       third: selectedThree.value,
       comment: text,
-      image_url: imagePath,
+      image_url: imageUrl,
     },
   ]);
 }
