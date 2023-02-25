@@ -2,7 +2,7 @@ import 'react-native-url-polyfill/auto';
 import CreateReportScreen from './app/screens/CreateReportScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import ReportsDashboardScreen from './app/screens/ReportsDashboardScreen';
+import ReportsScreen from './app/screens/ReportsScreen';
 import { Button } from 'react-native-elements';
 
 const Stack = createStackNavigator();
@@ -37,7 +37,7 @@ export default function App() {
             ),
           })}
         />
-        <Stack.Screen name="Reports" component={ReportsDashboardScreen} />
+        <Stack.Screen name="Reports" component={ReportsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

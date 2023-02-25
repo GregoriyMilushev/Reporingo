@@ -1,8 +1,9 @@
-import { StyleSheet, View, Text, Alert, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableOpacity, Button } from 'react-native';
 import { useState, useEffect } from 'react';
 import Report from '../supabase/report';
+import { formatDateForUI } from '../assets/helpers.js';
 
-export default function ReportsDashboardScreen({ navigation }) {
+export default function ReportsScreen({ navigation }) {
   const [reports, setReports] = useState([]);
 
   useEffect(() => {
@@ -14,11 +15,10 @@ export default function ReportsDashboardScreen({ navigation }) {
 
   const Item = ({ item }) => (
     <View style={styles.container}>
-      <Text style={styles.title}>{item.created_at}</Text>
-      <Text style={styles.title}>{item.first}</Text>
-      <Text style={styles.title}>{item.second}</Text>
-      <Text style={styles.title}>{item.third}</Text>
-      <Text style={styles.title}>{item.comment}</Text>
+      <Text style={styles.title}>
+        {formatDateForUI(item.created_at)} {' -> '} {item.first}
+      </Text>
+      <Button title="Edit" onPress={() => navigation.navigate('SingleReport')}></Button>
     </View>
   );
 
