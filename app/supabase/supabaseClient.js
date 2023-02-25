@@ -5,7 +5,7 @@ import { REACT_APP_SUPABASE_URL, REACT_APP_SUPABASE_ANON_KEY } from '@env';
 const supabaseUrl = REACT_APP_SUPABASE_URL;
 const supabaseAnonKey = REACT_APP_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     storage: AsyncStorage,
     autoRefreshToken: true,
@@ -13,3 +13,5 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     detectSessionInUrl: false,
   },
 });
+
+export default supabase;

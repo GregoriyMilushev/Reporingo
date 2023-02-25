@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient';
+import supabase from './supabaseClient';
 
 async function upload({ fileName, image }) {
   return supabase.storage.from('images').upload(fileName, image, {
