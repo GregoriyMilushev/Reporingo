@@ -20,11 +20,11 @@ const SelectImage = ({ onChange }) => {
       });
 
       if (!result.canceled) {
-        const bytes = await convertUriToBytes(result.assets[0].uri);
-        onChange(bytes);
+        const base64string = await convertImageToBase64(result);
+        onChange(base64string);
       }
     } catch (error) {
-      Alert.alert('There was problem handling your image. Please try again.');
+      Alert.alert('There was problem processing your image. Please try again.');
     }
   };
 
@@ -35,28 +35,24 @@ const SelectImage = ({ onChange }) => {
       });
 
       if (!result.canceled) {
-        const bytes = await convertUriToBytes(result.assets[0].uri);
-        onChange(bytes);
+        const base64string = await convertImageToBase64(result);
+        onChange(base64string);
       }
     } catch (error) {
       console.error(error);
-      Alert.alert('There was problem handling your image. Please try again.');
+      Alert.alert('There was problem processing your image. Please try again.');
     }
   };
 
-  const convertUriToBytes = async (fileUri) => {
+  const convertImageToBase64 = async (file) => {
     try {
-      const binaryString = await FileSystem.readAsStringAsync(fileUri, {
+      const binaryString = await FileSystem.readAsStringAsync(file.assets[0].uri, {
         encoding: FileSystem.EncodingType.Base64,
       });
-      const bytes = new Uint8Array(binaryString.length);
-      for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i);
-      }
-      return bytes;
+      return `data:image/jpeg;base64,${binaryString}`;
     } catch (error) {
       console.error(error);
-      throw new Error('Error converting URI to buffer');
+      throw new Error('There was an error processing your image. Please try again.');
     }
   };
 

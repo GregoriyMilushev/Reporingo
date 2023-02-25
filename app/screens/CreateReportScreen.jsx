@@ -1,11 +1,19 @@
 import { useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 import Dropdown from '../components/Dropdown';
 import { Button } from 'react-native-elements';
 import { dataOne, dataThree, dataTwo } from '../dummyData';
 import SelectImage from '../components/ImagePicker';
 import Report from '../supabase/report';
-import Image from '../supabase/image';
+import Storage from '../supabase/storage';
 
 export default function CreateReportScreen() {
   const [selectedOne, setSelectedOne] = useState(undefined);
@@ -13,27 +21,14 @@ export default function CreateReportScreen() {
   const [selectedThree, setSelectedThree] = useState(undefined);
   const [image, setImage] = useState(undefined);
   const [text, setText] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleTextChange = (newText) => {
     setText(newText);
   };
 
-  const selectImage = (newImage) => {
-    setImage(newImage);
-  };
-
-  const uploadImage = async () => {
-    try {
-      const fileName = `${Date.now()}.jpg`;
-      // console.log(JSON.stringify(image), 2);
-
-      let { data, error } = await Image.upload({ fileName, image });
-
-      return { imageData: data, imageError: error };
-    } catch (error) {
-      Alert.alert('Upload image failed. Please try again.');
-      return { imageError: true };
-    }
+  const selectImage = (image) => {
+    setImage(image);
   };
 
   const resetForm = () => {
@@ -45,10 +40,15 @@ export default function CreateReportScreen() {
   };
 
   const onSubmit = async () => {
-    const { imageData, imageError } = await uploadImage();
+    setLoading(true);
+    let imageUrl;
+    if (image) {
+      imageUrl = await Storage.uploadImage(image);
 
-    if (imageError) {
-      return;
+      if (!imageUrl) {
+        Alert.alert('There was an error uploading the image. Please try again.');
+        return;
+      }
     }
 
     const report = {
@@ -56,8 +56,7 @@ export default function CreateReportScreen() {
       selectedTwo,
       selectedThree,
       text,
-      // imagePath: imageData.path,
-      imagePath: '',
+      imageUrl: imageUrl ? imageUrl.publicUrl : '',
     };
 
     const { data, error } = await Report.create(report);
@@ -68,11 +67,12 @@ export default function CreateReportScreen() {
       Alert.alert(`Form submitted successfully.`);
       resetForm();
     }
+    setLoading(false);
   };
 
   return (
-    <View style={styles.container}>
-      <View>
+    <KeyboardAvoidingView style={styles.container}>
+      <ScrollView style={styles.form}>
         <View style={[styles.dropdown, styles.dropdownFirst]}>
           <Text style={styles.label}>First Label</Text>
           <Dropdown
@@ -117,10 +117,11 @@ export default function CreateReportScreen() {
           <Text style={styles.label}>Image label</Text>
           <SelectImage onChange={selectImage}></SelectImage>
         </View>
-      </View>
+      </ScrollView>
 
       <Button
         title="SUBMIT REPORT"
+        loading={loading}
         buttonStyle={{
           backgroundColor: '#82c773',
           borderRadius: 3,
@@ -131,14 +132,20 @@ export default function CreateReportScreen() {
           width: '100%',
           paddingHorizontal: 20,
           marginBottom: 40,
+          marginTop: 20,
         }}
         onPress={onSubmit}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  form: {
+    marginBottom: 40,
+    paddingBottom: 20,
+  },
+
   dropdownFirst: {
     marginTop: 40,
     alignItems: 'center',
@@ -174,5 +181,5 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  imagePicker: { height: 60, width: '95%', alignSelf: 'center' },
+  imagePicker: { height: 60, width: '95%', alignSelf: 'center', paddingBottom: 10 },
 });
