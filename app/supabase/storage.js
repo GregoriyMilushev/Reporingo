@@ -1,4 +1,4 @@
-import { supabase } from './supabaseClient';
+import supabase from './supabaseClient';
 import { decode } from 'base64-arraybuffer';
 
 const uploadImage = async (base64Image) => {
