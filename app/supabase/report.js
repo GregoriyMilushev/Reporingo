@@ -19,9 +19,15 @@ async function getAll() {
   return reports;
 }
 
+async function getById(id) {
+  let { data: reports, error } = await supabase.from('reports').select('*').eq('id', id);
+  return reports[0];
+}
+
 const Report = {
   create,
   getAll,
+  getById,
 };
 
 export default Report;

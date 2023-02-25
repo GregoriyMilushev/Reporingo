@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import ReportsScreen from './app/screens/ReportsScreen';
 import { Button } from 'react-native-elements';
+import SingleReportScreen from './app/screens/SingleReportScreen';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,7 @@ export default function App() {
           })}
         />
         <Stack.Screen name="Reports" component={ReportsScreen} />
+        <Stack.Screen name="SingleReport" component={SingleReportScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
