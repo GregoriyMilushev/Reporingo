@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import InputA1 from './InputA1';
 import InputA2 from './InputA2';
+import InputA3 from './InputA3';
 
 const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData }) => {
   const handleElementSelect = (element) => {
@@ -54,7 +55,7 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'A3' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>A3</Text>
+              <Text style={styles.schemaElementText}>{formData['A3'] ? formData['A3'] : 'A3'}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => handleElementSelect('A4')}>
@@ -207,6 +208,13 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
             inputValue={formData['A2']}
             selectNextElement={selectNextElement}
           ></InputA2>
+        )}
+        {selectedElement === 'A3' && (
+          <InputA3
+            setFormData={setFormData}
+            inputValue={formData['A3']}
+            selectNextElement={selectNextElement}
+          ></InputA3>
         )}
       </View>
     </View>
