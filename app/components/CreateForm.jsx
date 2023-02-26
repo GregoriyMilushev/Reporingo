@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import InputA1 from './InputA1';
+import InputA2 from './InputA2';
 
 const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData }) => {
   const handleElementSelect = (element) => {
     setSelectedElement(element);
+  };
+
+  const selectNextElement = () => {
+    const [letter, numberStr] = selectedElement.split('');
+    const number = Number(numberStr);
+
+    if (number < 4) {
+      setSelectedElement(`${letter}${number + 1}`);
+    } else if (letter === 'A' || letter === 'B' || letter === 'C') {
+      const dec = letter.charCodeAt(0);
+      if (dec >= 75 && dec <= 77) {
+        setSelectedElement(`${String.fromCharCode(dec + 1)}1`);
+      }
+    }
   };
 
   return (
@@ -29,7 +44,7 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'A2' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>A2</Text>
+              <Text style={styles.schemaElementText}>{formData['A2'] ? formData['A2'] : 'A2'}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => handleElementSelect('A3')}>
@@ -180,7 +195,18 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
           </TouchableWithoutFeedback>
         </View>
         {selectedElement === 'A1' && (
-          <InputA1 setFormData={setFormData} inputValue={formData['A1']}></InputA1>
+          <InputA1
+            setFormData={setFormData}
+            inputValue={formData['A1']}
+            selectNextElement={selectNextElement}
+          ></InputA1>
+        )}
+        {selectedElement === 'A2' && (
+          <InputA2
+            setFormData={setFormData}
+            inputValue={formData['A2']}
+            selectNextElement={selectNextElement}
+          ></InputA2>
         )}
       </View>
     </View>

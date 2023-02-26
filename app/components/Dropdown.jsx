@@ -87,7 +87,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#efefef',
     height: 50,
-    width: '95%',
     paddingHorizontal: 10,
     zIndex: 1,
   },
@@ -98,7 +97,7 @@ const styles = StyleSheet.create({
   dropdown: {
     position: 'absolute',
     backgroundColor: '#fff',
-    width: '100%',
+    // width: '100%',
     shadowColor: '#000000',
     shadowRadius: 4,
     shadowOffset: { height: 4, width: 0 },
