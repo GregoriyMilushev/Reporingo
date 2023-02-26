@@ -213,7 +213,7 @@ const CreateForm = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#1e262e',
     padding: 20,
   },
   schemaContainer: {
