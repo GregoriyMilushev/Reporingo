@@ -14,6 +14,7 @@ import { dataOne, dataThree, dataTwo } from '../dummyData';
 import SelectImage from '../components/ImagePicker';
 import Report from '../supabase/report';
 import Storage from '../supabase/storage';
+import CreateForm from '../components/CreateForm';
 
 export default function CreateReportScreen() {
   const [selectedOne, setSelectedOne] = useState(undefined);
@@ -71,72 +72,73 @@ export default function CreateReportScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
-      <ScrollView style={styles.form}>
-        <View style={[styles.dropdown, styles.dropdownFirst]}>
-          <Text style={styles.label}>First Label</Text>
-          <Dropdown
-            label="Select Item"
-            data={dataOne}
-            onSelect={setSelectedOne}
-            selected={selectedOne}
-          />
-        </View>
+    <CreateForm></CreateForm>
+    // <KeyboardAvoidingView style={styles.container}>
+    //   <ScrollView style={styles.form}>
+    //     <View style={[styles.dropdown, styles.dropdownFirst]}>
+    //       <Text style={styles.label}>First Label</Text>
+    //       <Dropdown
+    //         label="Select Item"
+    //         data={dataOne}
+    //         onSelect={setSelectedOne}
+    //         selected={selectedOne}
+    //       />
+    //     </View>
 
-        <View style={styles.dropdown}>
-          <Text style={styles.label}>Second Label</Text>
-          <Dropdown
-            label="Select Item"
-            data={dataTwo}
-            onSelect={setSelectedTwo}
-            selected={selectedTwo}
-          />
-        </View>
+    //     <View style={styles.dropdown}>
+    //       <Text style={styles.label}>Second Label</Text>
+    //       <Dropdown
+    //         label="Select Item"
+    //         data={dataTwo}
+    //         onSelect={setSelectedTwo}
+    //         selected={selectedTwo}
+    //       />
+    //     </View>
 
-        <View style={styles.dropdown}>
-          <Text style={styles.label}>Third Label</Text>
-          <Dropdown
-            label="Select Item"
-            data={dataThree}
-            onSelect={setSelectedThree}
-            selected={selectedThree}
-          />
-        </View>
+    //     <View style={styles.dropdown}>
+    //       <Text style={styles.label}>Third Label</Text>
+    //       <Dropdown
+    //         label="Select Item"
+    //         data={dataThree}
+    //         onSelect={setSelectedThree}
+    //         selected={selectedThree}
+    //       />
+    //     </View>
 
-        <View style={styles.dropdown}>
-          <Text style={styles.label}>Comment Label</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={handleTextChange}
-            value={text}
-            placeholder="Add comment..."
-          />
-        </View>
+    //     <View style={styles.dropdown}>
+    //       <Text style={styles.label}>Comment Label</Text>
+    //       <TextInput
+    //         style={styles.input}
+    //         onChangeText={handleTextChange}
+    //         value={text}
+    //         placeholder="Add comment..."
+    //       />
+    //     </View>
 
-        <View style={styles.imagePicker}>
-          <Text style={styles.label}>Image label</Text>
-          <SelectImage onChange={selectImage}></SelectImage>
-        </View>
-      </ScrollView>
+    //     <View style={styles.imagePicker}>
+    //       <Text style={styles.label}>Image label</Text>
+    //       <SelectImage onChange={selectImage}></SelectImage>
+    //     </View>
+    //   </ScrollView>
 
-      <Button
-        title="SUBMIT REPORT"
-        loading={loading}
-        buttonStyle={{
-          backgroundColor: '#82c773',
-          borderRadius: 3,
-          height: 60,
-        }}
-        containerStyle={{
-          height: 60,
-          width: '100%',
-          paddingHorizontal: 20,
-          marginBottom: 40,
-          marginTop: 20,
-        }}
-        onPress={onSubmit}
-      />
-    </KeyboardAvoidingView>
+    //   <Button
+    //     title="SUBMIT REPORT"
+    //     loading={loading}
+    //     buttonStyle={{
+    //       backgroundColor: '#82c773',
+    //       borderRadius: 3,
+    //       height: 60,
+    //     }}
+    //     containerStyle={{
+    //       height: 60,
+    //       width: '100%',
+    //       paddingHorizontal: 20,
+    //       marginBottom: 40,
+    //       marginTop: 20,
+    //     }}
+    //     onPress={onSubmit}
+    //   />
+    // </KeyboardAvoidingView>
   );
 }
 
