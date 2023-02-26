@@ -18,7 +18,10 @@ export default function ReportsScreen({ navigation }) {
       <Text style={styles.title}>
         {formatDateForUI(item.created_at)} {' -> '} {item.first}
       </Text>
-      <Button title="Edit" onPress={() => navigation.navigate('SingleReport')}></Button>
+      <Button
+        title="Edit"
+        onPress={() => navigation.navigate('SingleReport', { id: item.id, toBeConfirmed: false })}
+      ></Button>
     </View>
   );
 
