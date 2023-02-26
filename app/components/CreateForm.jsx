@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import InputA1 from './InputA1';
 
 const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData }) => {
   const handleElementSelect = (element) => {
     setSelectedElement(element);
-  };
-
-  const handleDropdownValueSelect = (cellName, value) => {
-    setFormData((prevState) => ({ ...prevState, cellName: value }));
   };
 
   return (
@@ -182,6 +179,9 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
             </View>
           </TouchableWithoutFeedback>
         </View>
+        {selectedElement === 'A1' && (
+          <InputA1 setFormData={setFormData} inputValue={formData['A1']}></InputA1>
+        )}
       </View>
     </View>
   );

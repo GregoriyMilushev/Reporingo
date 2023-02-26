@@ -51,13 +51,13 @@ export default function CreateReportScreen() {
     setImage(image);
   };
 
-  const resetForm = () => {
-    setSelectedOne(undefined);
-    setSelectedTwo(undefined);
-    setSelectedThree(undefined);
-    setImage(undefined);
-    setText('');
-  };
+  // const resetForm = () => {
+  //   setSelectedOne(undefined);
+  //   setSelectedTwo(undefined);
+  //   setSelectedThree(undefined);
+  //   setImage(undefined);
+  //   setText('');
+  // };
 
   const onSubmit = async () => {
     setLoading(true);
@@ -85,7 +85,7 @@ export default function CreateReportScreen() {
       Alert.alert('Report create failed. Please try again.');
     } else {
       Alert.alert(`Form submitted successfully.`);
-      resetForm();
+      // resetForm();
     }
     setLoading(false);
   };

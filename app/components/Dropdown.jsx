@@ -41,7 +41,7 @@ const Dropdown = ({ label, data, onSelect, selected }) => {
       key={(Math.random() + 1).toString(36).substring(7)}
       onPress={() => onItemPress(item)}
     >
-      <Text style={styles.item}>{item.label}</Text>
+      <Text style={styles.item}>{item}</Text>
     </TouchableWithoutFeedback>
     // {/* </View> */}
   );
@@ -71,7 +71,7 @@ const Dropdown = ({ label, data, onSelect, selected }) => {
   return (
     <TouchableOpacity ref={DropdownButton} style={styles.button} onPress={toggleDropdown}>
       {renderDropdown()}
-      <Text style={styles.buttonText}>{(selected && selected.label) || label}</Text>
+      <Text style={styles.buttonText}>{selected || label}</Text>
       <Icon type="font-awesome" name="chevron-down" />
     </TouchableOpacity>
   );
