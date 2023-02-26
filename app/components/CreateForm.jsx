@@ -1,30 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
-const CreateForm = () => {
-  const [selectedElement, setSelectedElement] = useState(null);
-
-  const [formData, setFormData] = useState({
-    A1: null,
-    A2: null,
-    A3: null,
-    A4: null,
-    B1: null,
-    B2: null,
-    B3: null,
-    B4: null,
-    C1: null,
-    C2: null,
-    C3: null,
-    C4: null,
-    D1: null,
-    D2: null,
-    D3: null,
-    D4: null,
-    comment: null,
-    imageUrl: null,
-  });
-
+const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData }) => {
   const handleElementSelect = (element) => {
     setSelectedElement(element);
   };

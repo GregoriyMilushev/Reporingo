@@ -17,12 +17,31 @@ import Storage from '../supabase/storage';
 import CreateForm from '../components/CreateForm';
 
 export default function CreateReportScreen() {
-  const [selectedOne, setSelectedOne] = useState(undefined);
-  const [selectedTwo, setSelectedTwo] = useState(undefined);
-  const [selectedThree, setSelectedThree] = useState(undefined);
   const [image, setImage] = useState(undefined);
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
+  const [selectedElement, setSelectedElement] = useState(null);
+
+  const [formData, setFormData] = useState({
+    A1: null,
+    A2: null,
+    A3: null,
+    A4: null,
+    B1: null,
+    B2: null,
+    B3: null,
+    B4: null,
+    C1: null,
+    C2: null,
+    C3: null,
+    C4: null,
+    D1: null,
+    D2: null,
+    D3: null,
+    D4: null,
+    comment: null,
+    imageUrl: null,
+  });
 
   const handleTextChange = (newText) => {
     setText(newText);
@@ -74,7 +93,12 @@ export default function CreateReportScreen() {
   return (
     <KeyboardAvoidingView style={styles.container}>
       <ScrollView style={styles.form}>
-        <CreateForm></CreateForm>
+        <CreateForm
+          selectedElement={selectedElement}
+          setSelectedElement={setSelectedElement}
+          formData={formData}
+          setFormData={setFormData}
+        ></CreateForm>
         {/* <View style={[styles.dropdown, styles.dropdownFirst]}>
           <Text style={styles.label}>First Label</Text>
           <Dropdown
@@ -105,7 +129,7 @@ export default function CreateReportScreen() {
           />
         </View> */}
 
-        <View style={styles.dropdown}>
+        {/* <View style={styles.dropdown}>
           <Text style={styles.label}>Comment Label</Text>
           <TextInput
             style={styles.input}
@@ -113,7 +137,7 @@ export default function CreateReportScreen() {
             value={text}
             placeholder="Add comment..."
           />
-        </View>
+        </View> */}
 
         <View style={styles.imagePicker}>
           <Text style={styles.label}>Image label</Text>
