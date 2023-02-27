@@ -40,9 +40,12 @@ export default function SingleReportScreen({ navigation }) {
             resizeMode="contain"
           ></Image>
 
-          <View style={styles.buttons}>
+          <View style={styles.buttonsContainer}>
             {toBeConfirmed ? (
-              ButtonComponent('Edit')
+              <>
+                {ButtonComponent('Edit')}
+                {ButtonComponent('Confirm')}
+              </>
             ) : (
               <>
                 {ButtonComponent('Edit')}
@@ -65,14 +68,16 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     padding: 20,
-    backgroundColor: 'white',
   },
   image: {
     marginTop: 30,
     height: 300,
   },
-  buttons: {
+  buttonsContainer: {
     display: 'flex',
+    position: 'absolute',
+    bottom: 10,
+    left: 20,
     flexDirection: 'row',
   },
   button: {
@@ -81,10 +86,7 @@ const styles = StyleSheet.create({
     height: 60,
   },
   buttonContainer: {
-    height: 60,
-    width: '50%',
-    paddingHorizontal: 20,
-    marginBottom: 40,
-    marginTop: 20,
+    flex: 1,
+    marginHorizontal: 10,
   },
 });
