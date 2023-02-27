@@ -8,6 +8,8 @@ export default function SingleReportScreen({ navigation }) {
   const route = useRoute();
   const { id, toBeConfirmed } = route.params;
   const [report, setReport] = useState(null);
+  const editButtonText = 'Edit';
+  const confirmButtonText = 'Confirm';
 
   useEffect(() => {
     (async () => {
@@ -16,12 +18,23 @@ export default function SingleReportScreen({ navigation }) {
     })();
   }, []);
 
+  const onEditPress = () => {
+    // open report create with report loaded
+    console.log('Edit');
+  };
+
+  const onConfirmPress = () => {
+    // Save to db
+    console.log('Confirm');
+  };
+
   let ButtonComponent = (title) => {
     return (
       <Button
         title={title}
         buttonStyle={styles.button}
         containerStyle={styles.buttonContainer}
+        onPress={title == editButtonText ? onEditPress : onConfirmPress}
       ></Button>
     );
   };
@@ -43,13 +56,13 @@ export default function SingleReportScreen({ navigation }) {
           <View style={styles.buttonsContainer}>
             {toBeConfirmed ? (
               <>
-                {ButtonComponent('Edit')}
-                {ButtonComponent('Confirm')}
+                {ButtonComponent(editButtonText)}
+                {ButtonComponent(confirmButtonText)}
               </>
             ) : (
               <>
-                {ButtonComponent('Edit')}
-                {ButtonComponent('Confirm')}
+                {ButtonComponent(editButtonText)}
+                {ButtonComponent(confirmButtonText)}
               </>
             )}
           </View>
