@@ -78,7 +78,8 @@ export default function CreateReportScreen() {
       text,
       imageUrl: imageUrl ? imageUrl.publicUrl : '',
     };
-
+    // this navigates to SingleReport, where report is confirmed.
+    // navigation.navigate('SingleReport', { toBeConfirmed: true, reportData: report })}
     const { data, error } = await Report.create(report);
 
     if (error) {

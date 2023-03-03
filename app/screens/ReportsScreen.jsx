@@ -20,7 +20,7 @@ export default function ReportsScreen({ navigation }) {
       </Text>
       <Button
         title="Edit"
-        onPress={() => navigation.navigate('SingleReport', { id: item.id, toBeConfirmed: false })}
+        onPress={() => navigation.navigate('SingleReport', { toBeConfirmed: false, id: item.id })}
       ></Button>
     </View>
   );
