@@ -7,6 +7,9 @@ import InputA4 from './InputA4';
 import InputB1 from './InputB1';
 import InputB2 from './InputB2';
 import InputB3 from './InputB3';
+import InputB4 from './InputB4';
+import InputD1 from './InputD1';
+import InputD2 from './InputD2';
 
 const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData }) => {
   const handleElementSelect = (element) => {
@@ -113,7 +116,7 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'B4' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>B4</Text>
+              <Text style={styles.schemaElementText}>{formData['B4'] ? formData['B4'] : 'B4'}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -167,7 +170,7 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'D1' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>D1</Text>
+              <Text style={styles.schemaElementText}>{formData['D1'] ? formData['D1'] : 'D1'}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => handleElementSelect('D2')}>
@@ -177,7 +180,9 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'D2' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>D2</Text>
+              <Text style={styles.schemaElementText}>
+                {formData['D2'] ? formData['D2'].split('-').join('') : 'D2'}
+              </Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => handleElementSelect('D3')}>
@@ -251,11 +256,25 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
           ></InputB3>
         )}
         {selectedElement === 'B4' && (
-          <InputB3
+          <InputB4
             setFormData={setFormData}
             inputValue={formData['B4']}
             selectNextElement={selectNextElement}
-          ></InputB3>
+          ></InputB4>
+        )}
+        {selectedElement === 'D1' && (
+          <InputD1
+            setFormData={setFormData}
+            inputValue={formData['D1']}
+            selectNextElement={selectNextElement}
+          ></InputD1>
+        )}
+        {selectedElement === 'D2' && (
+          <InputD2
+            setFormData={setFormData}
+            inputValue={formData['D2']}
+            selectNextElement={selectNextElement}
+          ></InputD2>
         )}
       </View>
     </View>
