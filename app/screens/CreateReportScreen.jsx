@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useF } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
@@ -10,17 +10,19 @@ import {
 } from 'react-native';
 import Dropdown from '../components/Dropdown';
 import { Button } from 'react-native-elements';
-import { dataOne, dataThree, dataTwo } from '../dummyData';
 import SelectImage from '../components/ImagePicker';
 import Report from '../supabase/report';
 import Storage from '../supabase/storage';
 import CreateForm from '../components/CreateForm';
+import { useRoute } from '@react-navigation/native';
 
-export default function CreateReportScreen() {
+export default function CreateReportScreen({ navigation }) {
+  const route = useRoute();
   const [image, setImage] = useState(undefined);
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedElement, setSelectedElement] = useState(null);
+  const { reportData = null } = route.params || {};
 
   const [formData, setFormData] = useState({
     A1: null,
@@ -42,6 +44,19 @@ export default function CreateReportScreen() {
     comment: null,
     imageUrl: null,
   });
+
+  useEffect(() => {
+    resetForm();
+    setSelectedElement(null);
+    if (reportData && Object.keys(reportData).length !== 0) {
+      const newFormData = {};
+      for (const data of Object.entries(reportData.report)) {
+        newFormData[data[0]] = data[1];
+      }
+      setFormData(newFormData);
+      navigation.setParams({ name: `Editing order: ${reportData.id}` });
+    }
+  }, [reportData]);
 
   const handleTextChange = (newText) => {
     setText(newText);
@@ -85,17 +100,13 @@ export default function CreateReportScreen() {
       }
     }
 
-    const report = JSON.stringify(formData);
     // this navigates to SingleReport, where report is confirmed.
-    // navigation.navigate('SingleReport', { toBeConfirmed: true, reportData: report })}
-    const { data, error } = await Report.create(report);
+    navigation.navigate('SingleReport', {
+      toBeConfirmed: true,
+      isEdit: !!reportData?.id, // if id is present, then edit
+      reportData: { id: reportData?.id, report: formData },
+    });
 
-    if (error) {
-      Alert.alert('Report create failed. Please try again.');
-    } else {
-      Alert.alert(`Form submitted successfully.`);
-      resetForm();
-    }
     setLoading(false);
   };
 

@@ -15,12 +15,11 @@ export default function ReportsScreen({ navigation }) {
   }, []);
 
   const Item = ({ item }) => {
-    const parsedReport = JSON.parse(item.report);
     return (
       <View style={styles.container}>
         <Text style={styles.title}>
-          {formatDateForUI(item.created_at)} {'  '} {parsedReport.A1} {parsedReport.A2}{' '}
-          {parsedReport.A3} {parsedReport.A4}
+          {formatDateForUI(item.created_at)} {'  '} {item.report.A1} {item.report.A2}{' '}
+          {item.report.A3} {item.report.A4}
         </Text>
         <Button
           title="View"

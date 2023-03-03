@@ -6,7 +6,7 @@ const Stack = createStackNavigator();
 const FirstScreenNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Create Report" component={CreateReportScreen} />
+      <Stack.Screen name="Create Report" component={(CreateReportScreen, {})} />
     </Stack.Navigator>
   );
 };

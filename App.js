@@ -15,8 +15,8 @@ export default function App() {
         <Stack.Screen
           name="Create Report"
           component={CreateReportScreen}
-          options={({ navigation }) => ({
-            title: 'Create Report',
+          options={({ navigation, route }) => ({
+            title: route?.params?.name || 'Create Report',
             headerStyle: {
               backgroundColor: '#fff',
             },

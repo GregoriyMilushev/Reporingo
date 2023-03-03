@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
 import { Button, Image } from 'react-native-elements';
 import { useState, useEffect } from 'react';
 import Report from '../supabase/report';
@@ -7,19 +7,18 @@ import { formatDateForUI } from '../assets/helpers';
 
 export default function SingleReportScreen({ navigation }) {
   const route = useRoute();
-  const { toBeConfirmed, id = null, reportData = null } = route.params;
+  const { toBeConfirmed, isEdit = false, id = null, reportData = null } = route.params;
   const [report, setReport] = useState(null);
   const editButtonText = 'Edit';
   const confirmButtonText = 'Confirm';
 
-  const getReportData = (report) => {
-    return JSON.parse(report.report);
-  };
-
   useEffect(() => {
+    navigation.setParams({ name: '' });
     (async () => {
       if (reportData) {
+        // executes only when creating report
         setReport(reportData);
+        navigation.setParams({ name: formatDateForUI(Date.now()) });
         return;
       }
 
@@ -31,12 +30,25 @@ export default function SingleReportScreen({ navigation }) {
 
   const onEditPress = () => {
     // open report create with report loaded
-    console.log('Edit');
+    navigation.navigate('Create Report', { reportData: report });
   };
 
-  const onConfirmPress = () => {
-    // Save to db
-    console.log('Confirm');
+  const onConfirmPress = async () => {
+    let err;
+    if (isEdit) {
+      const { data, error } = await Report.update(report.id, report.report);
+      err = error;
+    } else {
+      const { data, error } = await Report.create(report.report);
+      err = error;
+    }
+
+    if (err) {
+      Alert.alert(`Report ${isEdit ? 'Edit' : 'Create'} failed. Please try again.`);
+    } else {
+      Alert.alert(`Form submitted successfully.`);
+      navigation.navigate('Create Report', { reportData: {} });
+    }
   };
 
   let ButtonComponent = (title) => {
@@ -51,10 +63,10 @@ export default function SingleReportScreen({ navigation }) {
   };
 
   const getRow = (report, type) => {
-    const data1 = getReportData(report)[`${type}1`] || '';
-    const data2 = getReportData(report)[`${type}2`] || '';
-    const data3 = getReportData(report)[`${type}3`] || '';
-    const data4 = getReportData(report)[`${type}4`] || '';
+    const data1 = report.report?.[`${type}1`] || '';
+    const data2 = report.report?.[`${type}2`] || '';
+    const data3 = report.report?.[`${type}3`] || '';
+    const data4 = report.report?.[`${type}4`] || '';
     return `${data1}/${data2}/${data3}/${data4}`;
   };
 
@@ -62,13 +74,14 @@ export default function SingleReportScreen({ navigation }) {
     <View style={styles.container}>
       {report ? (
         <>
+          <Text style={styles.text}>ID: {report.id || ' - '}</Text>
           <Text style={styles.text}>A: {getRow(report, 'A')}</Text>
           <Text style={styles.text}>B: {getRow(report, 'B')}</Text>
           <Text style={styles.text}>C: {getRow(report, 'C')}</Text>
           <Text style={styles.text}>D: {getRow(report, 'D')}</Text>
-          <Text style={styles.text}>Comment: {report.comment}</Text>
+          <Text style={styles.text}>Comment: {report.report?.comment}</Text>
           <Image
-            source={{ uri: getReportData(report).image_url }}
+            source={{ uri: report.report?.imageUrl }}
             style={styles.image}
             resizeMode="contain"
           ></Image>
@@ -80,10 +93,7 @@ export default function SingleReportScreen({ navigation }) {
                 {ButtonComponent(confirmButtonText)}
               </>
             ) : (
-              <>
-                {ButtonComponent(editButtonText)}
-                {/* {ButtonComponent(confirmButtonText)} */}
-              </>
+              <>{ButtonComponent(editButtonText)}</>
             )}
           </View>
         </>
