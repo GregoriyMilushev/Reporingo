@@ -73,6 +73,7 @@ const InputD3 = ({ setFormData, inputValue, selectNextElement }) => {
           onChangeText={handleLeftChange}
           keyboardType="numeric"
           autoFocus={true}
+          placeholder={'Min'}
         />
         <Text style={styles.dash}>-</Text>
         <TextInput
@@ -80,6 +81,7 @@ const InputD3 = ({ setFormData, inputValue, selectNextElement }) => {
           value={rightValue}
           onChangeText={handleRightChange}
           keyboardType="numeric"
+          placeholder={'Max'}
         />
       </View>
     </>
@@ -105,6 +107,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     padding: 0,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
   dash: {
     color: '#fff',

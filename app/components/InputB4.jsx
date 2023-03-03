@@ -58,13 +58,15 @@ const InputB4 = ({ setFormData, inputValue, selectNextElement }) => {
         onChangeText={handleLeftChange}
         keyboardType="numeric"
         autoFocus={true}
+        maxLength={2}
       />
       <Text style={styles.dash}>-</Text>
       <TextInput
         style={styles.input}
-        value={rightValue}
+        value={midValue}
         onChangeText={handleMidChange}
         keyboardType="numeric"
+        maxLength={3}
       />
       <Text style={styles.dash}>+</Text>
       <TextInput
@@ -72,6 +74,7 @@ const InputB4 = ({ setFormData, inputValue, selectNextElement }) => {
         value={rightValue}
         onChangeText={handleRightChange}
         keyboardType="numeric"
+        maxLength={2}
       />
     </View>
   );
@@ -96,6 +99,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     padding: 0,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
   dash: {
     color: '#fff',

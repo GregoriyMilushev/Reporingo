@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useRef } from 'react';
 import { InteractionManager, Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Input } from 'react-native-elements';
 import CellData from '../supabase/cellData';
@@ -65,17 +64,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 8,
     overflow: 'hidden',
   },
+  inputContent: {},
+
   input: {
-    width: 85,
+    width: 105,
     height: 60,
     backgroundColor: '#fff',
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
     padding: 0,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
   dash: {
     color: '#fff',
