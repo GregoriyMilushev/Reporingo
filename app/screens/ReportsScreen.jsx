@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text, FlatList, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
+import { Button } from 'react-native-elements';
 import { useState, useEffect } from 'react';
 import Report from '../supabase/report';
 import { formatDateForUI } from '../assets/helpers.js';
@@ -16,10 +17,11 @@ export default function ReportsScreen({ navigation }) {
   const Item = ({ item }) => (
     <View style={styles.container}>
       <Text style={styles.title}>
-        {formatDateForUI(item.created_at)} {' -> '} {item.first}
+        {formatDateForUI(item.created_at)} {'  '} {item.first}
       </Text>
       <Button
-        title="Edit"
+        title="View"
+        buttonStyle={styles.button}
         onPress={() => navigation.navigate('SingleReport', { toBeConfirmed: false, id: item.id })}
       ></Button>
     </View>
@@ -32,58 +34,60 @@ export default function ReportsScreen({ navigation }) {
   );
 
   return (
-    <View style={styles.buttonContainer}>
+    <View>
       <FlatList
         data={reports}
         renderItem={({ item }) => <Item item={item} />}
         ListEmptyComponent={EmptyMessage}
       />
-      <View style={styles.floatingButtonContainer}>
+
+      {/* <View style={styles.floatingButtonContainer}>
         <TouchableOpacity
           style={styles.floatingButton}
           onPress={() => navigation.navigate('CreateReportScreen')}
         >
           <Text style={styles.floatingButtonText}>+</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
     margin: 5,
     padding: 10,
     backgroundColor: '#fff',
-
     borderRadius: 15,
-    borderWidth: 1,
-    borderColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   title: {
     color: '#3c3c3b',
     fontSize: 18,
   },
-  buttonContainer: {
-    backgroundColor: '#3c3c3b',
-    flex: 1,
+  button: {
+    backgroundColor: '#82c773',
+    borderRadius: 10,
+    padding: 13,
   },
-  floatingButtonContainer: {
-    position: 'absolute',
-    bottom: '5%',
-    right: '10%',
-    zIndex: 1,
-  },
-  floatingButton: {
-    width: 50,
-    height: 50,
-    backgroundColor: '#00a8e8',
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  floatingButtonText: {
-    color: 'white',
-    fontSize: 24,
-  },
+  // floatingButtonContainer: {
+  //   position: 'absolute',
+  //   bottom: '15%',
+  //   right: '10%',
+  //   zIndex: 1,
+  // },
+  // floatingButton: {
+  //   width: 50,
+  //   height: 50,
+  //   backgroundColor: '#00a8e8',
+  //   borderRadius: 25,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // floatingButtonText: {
+  //   color: 'white',
+  //   fontSize: 24,
+  // },
 });
