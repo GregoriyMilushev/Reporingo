@@ -11,6 +11,7 @@ import InputB4 from './InputB4';
 import InputD1 from './InputD1';
 import InputD2 from './InputD2';
 import InputD3 from './InputD3';
+import InputD4 from './InputD4';
 
 const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData }) => {
   const handleElementSelect = (element) => {
@@ -203,7 +204,9 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'D4' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>D4</Text>
+              <Text style={styles.schemaElementText}>
+                {formData['D4'] ? formData['D4'].split('-').join('') : 'D4'}
+              </Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -283,6 +286,13 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
             inputValue={formData['D3']}
             selectNextElement={selectNextElement}
           ></InputD3>
+        )}
+        {selectedElement === 'D4' && (
+          <InputD4
+            setFormData={setFormData}
+            inputValue={formData['D4']}
+            selectNextElement={selectNextElement}
+          ></InputD4>
         )}
       </View>
     </View>
