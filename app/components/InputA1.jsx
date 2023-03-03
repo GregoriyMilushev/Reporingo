@@ -15,7 +15,6 @@ const InputA1 = ({ setFormData, inputValue, selectNextElement }) => {
 
     getData();
   }, []);
-
   const handleValueSelect = (value) => {
     setFormData((prevState) => {
       return { ...prevState, A1: value };

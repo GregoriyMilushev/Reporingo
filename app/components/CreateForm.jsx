@@ -4,10 +4,17 @@ import InputA1 from './InputA1';
 import InputA2 from './InputA2';
 import InputA3 from './InputA3';
 import InputA4 from './InputA4';
+
+import InputC1 from './InputC1';
+import InputC2 from './InputC2';
+import InputC3 from './InputC3';
+import InputC4 from './InputC4';
+
 import InputB1 from './InputB1';
 import InputB2 from './InputB2';
 import InputB3 from './InputB3';
 import InputB4 from './InputB4';
+
 import InputD1 from './InputD1';
 import InputD2 from './InputD2';
 import InputD3 from './InputD3';
@@ -130,7 +137,7 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'C1' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>C1</Text>
+              <Text style={styles.schemaElementText}>{formData['C1'] ? formData['C1'] : 'C1'}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => handleElementSelect('C2')}>
@@ -140,7 +147,7 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'C2' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>C2</Text>
+              <Text style={styles.schemaElementText}>{formData['C2'] ? formData['C2'] : 'C2'}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => handleElementSelect('C3')}>
@@ -150,7 +157,7 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'C3' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>C3</Text>
+              <Text style={styles.schemaElementText}>{formData['C3'] ? formData['C3'] : 'C3'}</Text>
             </View>
           </TouchableWithoutFeedback>
           <TouchableWithoutFeedback onPress={() => handleElementSelect('C4')}>
@@ -160,7 +167,7 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'C4' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>C4</Text>
+              <Text style={styles.schemaElementText}>{formData['C4'] ? formData['C4'] : 'C4'}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -265,6 +272,18 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
             inputValue={formData['B4']}
             selectNextElement={selectNextElement}
           ></InputB4>
+        )}
+        {selectedElement === 'C1' && (
+          <InputC1 setFormData={setFormData} inputValue={formData['C1']}></InputC1>
+        )}
+        {selectedElement === 'C2' && (
+          <InputC2 setFormData={setFormData} inputValue={formData['C2']}></InputC2>
+        )}
+        {selectedElement === 'C3' && (
+          <InputC3 setFormData={setFormData} inputValue={formData['C3']}></InputC3>
+        )}
+        {selectedElement === 'C4' && (
+          <InputC4 setFormData={setFormData} inputValue={formData['C4']}></InputC4>
         )}
         {selectedElement === 'D1' && (
           <InputD1
