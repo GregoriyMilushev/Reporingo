@@ -21,7 +21,6 @@ const InputB2 = ({ setFormData, inputValue, selectNextElement }) => {
 
   const handleLeftChange = (value) => {
     setLeftValue(value);
-    console.log(value);
     handleTextChange(`${value}-${rightValue}`);
   };
 
