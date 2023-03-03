@@ -51,13 +51,27 @@ export default function CreateReportScreen() {
     setImage(image);
   };
 
-  // const resetForm = () => {
-  //   setSelectedOne(undefined);
-  //   setSelectedTwo(undefined);
-  //   setSelectedThree(undefined);
-  //   setImage(undefined);
-  //   setText('');
-  // };
+  const resetForm = () => {
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        B1: null,
+        B2: null,
+        B3: null,
+        B4: null,
+        C1: null,
+        C2: null,
+        C3: null,
+        C4: null,
+        D1: null,
+        D2: null,
+        D3: null,
+        D4: null,
+        comment: null,
+        imageUrl: null,
+      };
+    });
+  };
 
   const onSubmit = async () => {
     setLoading(true);
@@ -71,13 +85,7 @@ export default function CreateReportScreen() {
       }
     }
 
-    const report = {
-      selectedOne,
-      selectedTwo,
-      selectedThree,
-      text,
-      imageUrl: imageUrl ? imageUrl.publicUrl : '',
-    };
+    const report = JSON.stringify(formData);
     // this navigates to SingleReport, where report is confirmed.
     // navigation.navigate('SingleReport', { toBeConfirmed: true, reportData: report })}
     const { data, error } = await Report.create(report);
@@ -86,7 +94,7 @@ export default function CreateReportScreen() {
       Alert.alert('Report create failed. Please try again.');
     } else {
       Alert.alert(`Form submitted successfully.`);
-      // resetForm();
+      resetForm();
     }
     setLoading(false);
   };
