@@ -78,7 +78,8 @@ export default function CreateReportScreen() {
       text,
       imageUrl: imageUrl ? imageUrl.publicUrl : '',
     };
-
+    // this navigates to SingleReport, where report is confirmed.
+    // navigation.navigate('SingleReport', { toBeConfirmed: true, reportData: report })}
     const { data, error } = await Report.create(report);
 
     if (error) {
@@ -99,46 +100,6 @@ export default function CreateReportScreen() {
           formData={formData}
           setFormData={setFormData}
         ></CreateForm>
-        {/* <View style={[styles.dropdown, styles.dropdownFirst]}>
-          <Text style={styles.label}>First Label</Text>
-          <Dropdown
-            label="Select Item"
-            data={dataOne}
-            onSelect={setSelectedOne}
-            selected={selectedOne}
-          />
-        </View>
-
-        <View style={styles.dropdown}>
-          <Text style={styles.label}>Second Label</Text>
-          <Dropdown
-            label="Select Item"
-            data={dataTwo}
-            onSelect={setSelectedTwo}
-            selected={selectedTwo}
-          />
-        </View>
-
-        <View style={styles.dropdown}>
-          <Text style={styles.label}>Third Label</Text>
-          <Dropdown
-            label="Select Item"
-            data={dataThree}
-            onSelect={setSelectedThree}
-            selected={selectedThree}
-          />
-        </View> */}
-
-        {/* <View style={styles.dropdown}>
-          <Text style={styles.label}>Comment Label</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={handleTextChange}
-            value={text}
-            placeholder="Add comment..."
-          />
-        </View> */}
-
         <View style={styles.imagePicker}>
           <Text style={styles.label}>Image label</Text>
           <SelectImage onChange={selectImage}></SelectImage>
