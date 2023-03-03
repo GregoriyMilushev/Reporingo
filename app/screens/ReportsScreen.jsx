@@ -14,18 +14,22 @@ export default function ReportsScreen({ navigation }) {
     })();
   }, []);
 
-  const Item = ({ item }) => (
-    <View style={styles.container}>
-      <Text style={styles.title}>
-        {formatDateForUI(item.created_at)} {'  '} {item.first}
-      </Text>
-      <Button
-        title="View"
-        buttonStyle={styles.button}
-        onPress={() => navigation.navigate('SingleReport', { toBeConfirmed: false, id: item.id })}
-      ></Button>
-    </View>
-  );
+  const Item = ({ item }) => {
+    const parsedReport = JSON.parse(item.report);
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          {formatDateForUI(item.created_at)} {'  '} {parsedReport.A1} {parsedReport.A2}{' '}
+          {parsedReport.A3} {parsedReport.A4}
+        </Text>
+        <Button
+          title="View"
+          buttonStyle={styles.button}
+          onPress={() => navigation.navigate('SingleReport', { toBeConfirmed: false, id: item.id })}
+        ></Button>
+      </View>
+    );
+  };
 
   const EmptyMessage = () => (
     <View style={{ alignItems: 'center', marginTop: 20 }}>

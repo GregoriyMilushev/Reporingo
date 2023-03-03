@@ -39,7 +39,11 @@ export default function App() {
           })}
         />
         <Stack.Screen name="Reports" component={ReportsScreen} />
-        <Stack.Screen name="SingleReport" component={SingleReportScreen} />
+        <Stack.Screen
+          name="SingleReport"
+          component={SingleReportScreen}
+          options={({ route }) => ({ title: route.params.name })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
