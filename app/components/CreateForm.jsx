@@ -7,6 +7,7 @@ import InputA4 from './InputA4';
 import InputB1 from './InputB1';
 import InputB2 from './InputB2';
 import InputB3 from './InputB3';
+import InputB4 from './InputB4';
 
 const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData }) => {
   const handleElementSelect = (element) => {
@@ -113,7 +114,7 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
                 selectedElement === 'B4' && styles.selectedSchemaElement,
               ]}
             >
-              <Text style={styles.schemaElementText}>B4</Text>
+              <Text style={styles.schemaElementText}>{formData['B4'] ? formData['B4'] : 'B4'}</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
@@ -251,11 +252,11 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
           ></InputB3>
         )}
         {selectedElement === 'B4' && (
-          <InputB3
+          <InputB4
             setFormData={setFormData}
             inputValue={formData['B4']}
             selectNextElement={selectNextElement}
-          ></InputB3>
+          ></InputB4>
         )}
       </View>
     </View>

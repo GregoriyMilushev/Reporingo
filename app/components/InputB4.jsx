@@ -23,21 +23,29 @@ const InputB4 = ({ setFormData, inputValue, selectNextElement }) => {
   }, []);
 
   const [leftValue, setLeftValue] = useState(inputValue ? inputValue.split('-')[0] : 0);
-  const [rightValue, setRightValue] = useState(inputValue ? inputValue.split('-')[1] : 0);
+  const [midValue, setMidValue] = useState(inputValue ? inputValue.split('-')[1].split('+')[0] : 0);
+  const [rightValue, setRightValue] = useState(
+    inputValue ? inputValue.split('-')[1].split('+')[1] : 0
+  );
 
   const handleLeftChange = (text) => {
     setLeftValue(text);
-    handleTextChange(`${text}-${rightValue}`);
+    handleTextChange(`${text}-${midValue}+${rightValue}`);
+  };
+
+  const handleMidChange = (text) => {
+    setMidValue(text);
+    handleTextChange(`${leftValue}-${text}+${rightValue}`);
   };
 
   const handleRightChange = (text) => {
     setRightValue(text);
-    handleTextChange(`${leftValue}-${text}`);
+    handleTextChange(`${leftValue}-${midValue}+${text}`);
   };
 
   const handleTextChange = (newText) => {
     setFormData((prevState) => {
-      return { ...prevState, A3: newText };
+      return { ...prevState, B4: newText };
     });
   };
 
@@ -55,10 +63,10 @@ const InputB4 = ({ setFormData, inputValue, selectNextElement }) => {
       <TextInput
         style={styles.input}
         value={rightValue}
-        onChangeText={handleRightChange}
+        onChangeText={handleMidChange}
         keyboardType="numeric"
       />
-      <Text style={styles.dash}>-</Text>
+      <Text style={styles.dash}>+</Text>
       <TextInput
         style={styles.input}
         value={rightValue}
