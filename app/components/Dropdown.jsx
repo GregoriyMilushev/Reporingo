@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-const Dropdown = ({ label, data, onSelect, selected }) => {
+const Dropdown = ({ label, data, onSelect, selected, small }) => {
   const DropdownButton = useRef();
   const [visible, setVisible] = useState(false);
   const [dropdownTop, setDropdownTop] = useState(0);
@@ -52,15 +52,7 @@ const Dropdown = ({ label, data, onSelect, selected }) => {
         <View style={styles.overlay} onPress={() => setVisible(false)}>
           <ScrollView>
             <View onStartShouldSetResponder={() => true}>
-              {/* <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => index.toString()}
-                contentContainerStyle={{
-                  flexGrow: 1,
-                }}
-              /> */}
-              {data.map((item) => renderItem({ item }))}
+              {data && data.map((item) => renderItem({ item }))}
             </View>
           </ScrollView>
         </View>
@@ -69,7 +61,11 @@ const Dropdown = ({ label, data, onSelect, selected }) => {
   };
 
   return (
-    <TouchableOpacity ref={DropdownButton} style={styles.button} onPress={toggleDropdown}>
+    <TouchableOpacity
+      ref={DropdownButton}
+      style={[styles.button, small ? styles.buttonSmall : '']}
+      onPress={toggleDropdown}
+    >
       {renderDropdown()}
       <Text style={styles.buttonText}>{selected || label}</Text>
       <Icon type="font-awesome" name="chevron-down" />
@@ -90,9 +86,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     zIndex: 1,
   },
+  buttonSmall: {
+    width: '30%',
+    height: 60,
+  },
   buttonText: {
     flex: 1,
     textAlign: 'center',
+    fontSize: 20,
   },
   dropdown: {
     position: 'absolute',
