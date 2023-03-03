@@ -6,13 +6,18 @@ import { useRoute } from '@react-navigation/native';
 
 export default function SingleReportScreen({ navigation }) {
   const route = useRoute();
-  const { id, toBeConfirmed } = route.params;
+  const { toBeConfirmed, id = null, reportData = null } = route.params;
   const [report, setReport] = useState(null);
   const editButtonText = 'Edit';
   const confirmButtonText = 'Confirm';
 
   useEffect(() => {
     (async () => {
+      if (reportData) {
+        setReport(reportData);
+        return;
+      }
+
       const rep = await Report.getById(id);
       setReport(rep);
     })();
@@ -62,7 +67,7 @@ export default function SingleReportScreen({ navigation }) {
             ) : (
               <>
                 {ButtonComponent(editButtonText)}
-                {ButtonComponent(confirmButtonText)}
+                {/* {ButtonComponent(confirmButtonText)} */}
               </>
             )}
           </View>
