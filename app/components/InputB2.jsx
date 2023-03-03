@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { InteractionManager, Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Input } from 'react-native-elements';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
 
 const InputB2 = ({ setFormData, inputValue, selectNextElement }) => {
+  const inputRef = useRef();
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -21,8 +22,8 @@ const InputB2 = ({ setFormData, inputValue, selectNextElement }) => {
 
   const handleLeftChange = (value) => {
     setLeftValue(value);
-    console.log(value);
     handleTextChange(`${value}-${rightValue}`);
+    inputRef.current.focus();
   };
 
   const handleRightChange = (text) => {
@@ -47,6 +48,7 @@ const InputB2 = ({ setFormData, inputValue, selectNextElement }) => {
       ></Dropdown>
       <Text style={styles.dash}>-</Text>
       <TextInput
+        ref={inputRef}
         style={styles.input}
         value={rightValue}
         onChangeText={handleRightChange}

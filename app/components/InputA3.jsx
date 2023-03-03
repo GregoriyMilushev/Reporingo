@@ -5,6 +5,7 @@ import { Input } from 'react-native-elements';
 
 const InputA3 = ({ setFormData, inputValue, selectNextElement }) => {
   const leftInputRef = useRef();
+  const rightInputRef = useRef();
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
@@ -41,6 +42,16 @@ const InputA3 = ({ setFormData, inputValue, selectNextElement }) => {
     });
   };
 
+  const handleLeftSubmit = () => {
+    rightInputRef.current.focus();
+  };
+
+  const handleRightSubmit = () => {
+    if (leftValue) {
+      selectNextElement();
+    }
+  };
+
   return (
     <View keyboardShouldPersistTaps="always" style={styles.container}>
       <TextInput
@@ -50,13 +61,16 @@ const InputA3 = ({ setFormData, inputValue, selectNextElement }) => {
         onChangeText={handleLeftChange}
         keyboardType="numeric"
         autoFocus={true}
+        onSubmitEditing={handleLeftSubmit}
       />
       <Text style={styles.dash}>-</Text>
       <TextInput
+        ref={rightInputRef}
         style={styles.input}
         value={rightValue}
         onChangeText={handleRightChange}
         keyboardType="numeric"
+        onSubmitEditing={handleRightSubmit}
       />
     </View>
   );
