@@ -98,6 +98,13 @@ export default function CreateReportScreen({ navigation }) {
         Alert.alert('There was an error uploading the image. Please try again.');
         return;
       }
+
+      setFormData((prevState) => {
+        return {
+          ...prevState,
+          imageUrl,
+        };
+      });
     }
 
     // this navigates to SingleReport, where report is confirmed.
