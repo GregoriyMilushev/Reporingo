@@ -3,6 +3,7 @@ import { Button, Image } from 'react-native-elements';
 import { useState, useEffect } from 'react';
 import Report from '../supabase/report';
 import { useRoute } from '@react-navigation/native';
+import { formatDateForUI } from '../assets/helpers';
 
 export default function SingleReportScreen({ navigation }) {
   const route = useRoute();
@@ -10,6 +11,10 @@ export default function SingleReportScreen({ navigation }) {
   const [report, setReport] = useState(null);
   const editButtonText = 'Edit';
   const confirmButtonText = 'Confirm';
+
+  const getReportData = (report) => {
+    return JSON.parse(report.report);
+  };
 
   useEffect(() => {
     (async () => {
@@ -20,6 +25,7 @@ export default function SingleReportScreen({ navigation }) {
 
       const rep = await Report.getById(id);
       setReport(rep);
+      navigation.setParams({ name: formatDateForUI(rep.created_at) });
     })();
   }, []);
 
@@ -44,16 +50,25 @@ export default function SingleReportScreen({ navigation }) {
     );
   };
 
+  const getRow = (report, type) => {
+    const data1 = getReportData(report)[`${type}1`] || '';
+    const data2 = getReportData(report)[`${type}2`] || '';
+    const data3 = getReportData(report)[`${type}3`] || '';
+    const data4 = getReportData(report)[`${type}4`] || '';
+    return `${data1}/${data2}/${data3}/${data4}`;
+  };
+
   return (
     <View style={styles.container}>
       {report ? (
         <>
-          <Text>{report.first}</Text>
-          <Text>{report.second}</Text>
-          <Text>{report.third}</Text>
-          <Text>{report.comment}</Text>
+          <Text style={styles.text}>A: {getRow(report, 'A')}</Text>
+          <Text style={styles.text}>B: {getRow(report, 'B')}</Text>
+          <Text style={styles.text}>C: {getRow(report, 'C')}</Text>
+          <Text style={styles.text}>D: {getRow(report, 'D')}</Text>
+          <Text style={styles.text}>Comment: {report.comment}</Text>
           <Image
-            source={{ uri: report.image_url }}
+            source={{ uri: getReportData(report).image_url }}
             style={styles.image}
             resizeMode="contain"
           ></Image>
@@ -86,6 +101,14 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     padding: 20,
+    backgroundColor: '#fff',
+    borderRadius: 30,
+    margin: 3,
+  },
+  text: {
+    fontSize: 18,
+    color: '#3c3c3b',
+    margin: 5,
   },
   image: {
     marginTop: 30,
