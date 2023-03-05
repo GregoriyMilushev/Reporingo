@@ -274,16 +274,32 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
           ></InputB4>
         )}
         {selectedElement === 'C1' && (
-          <InputC1 setFormData={setFormData} inputValue={formData['C1']}></InputC1>
+          <InputC1
+            setFormData={setFormData}
+            inputValue={formData['C1']}
+            selectNextElement={selectNextElement}
+          ></InputC1>
         )}
         {selectedElement === 'C2' && (
-          <InputC2 setFormData={setFormData} inputValue={formData['C2']}></InputC2>
+          <InputC2
+            setFormData={setFormData}
+            inputValue={formData['C2']}
+            selectNextElement={selectNextElement}
+          ></InputC2>
         )}
         {selectedElement === 'C3' && (
-          <InputC3 setFormData={setFormData} inputValue={formData['C3']}></InputC3>
+          <InputC3
+            setFormData={setFormData}
+            inputValue={formData['C3']}
+            selectNextElement={selectNextElement}
+          ></InputC3>
         )}
         {selectedElement === 'C4' && (
-          <InputC4 setFormData={setFormData} inputValue={formData['C4']}></InputC4>
+          <InputC4
+            setFormData={setFormData}
+            inputValue={formData['C4']}
+            selectNextElement={selectNextElement}
+          ></InputC4>
         )}
         {selectedElement === 'D1' && (
           <InputD1

@@ -8,19 +8,10 @@ const InputA3 = ({ setFormData, inputValue, selectNextElement }) => {
   const rightInputRef = useRef();
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      if (leftInputRef?.current) {
-        leftInputRef.current.focus();
-      }
-    });
-
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      // selectNextElement();
-    });
-
-    return () => {
-      hideSubscription.remove();
-    };
+    setTimeout(() => {
+      leftInputRef.current?.blur();
+      leftInputRef.current?.focus();
+    }, 100);
   }, []);
 
   const [leftValue, setLeftValue] = useState(inputValue ? inputValue.split('-')[0] : 0);

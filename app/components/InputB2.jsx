@@ -21,9 +21,12 @@ const InputB2 = ({ setFormData, inputValue, selectNextElement }) => {
   const [rightValue, setRightValue] = useState(inputValue ? inputValue.split('-')[1] : 0);
 
   const handleLeftChange = (value) => {
+    setTimeout(() => {
+      inputRef.current?.blur();
+      inputRef.current?.focus();
+    }, 100);
     setLeftValue(value);
     handleTextChange(`${value}-${rightValue}`);
-    inputRef.current.focus();
   };
 
   const handleRightChange = (text) => {
@@ -53,6 +56,7 @@ const InputB2 = ({ setFormData, inputValue, selectNextElement }) => {
         value={rightValue}
         onChangeText={handleRightChange}
         keyboardType="numeric"
+        onSubmitEditing={selectNextElement}
       />
     </View>
   );

@@ -8,6 +8,8 @@ import Dropdown from './Dropdown';
 const InputD2 = ({ setFormData, inputValue, selectNextElement }) => {
   const [data, setData] = useState([]);
 
+  const inputRef = useRef();
+
   useEffect(() => {
     const getData = async () => {
       const { data, error } = await CellData.getValues('D2');
@@ -21,6 +23,10 @@ const InputD2 = ({ setFormData, inputValue, selectNextElement }) => {
   const [rightValue, setRightValue] = useState(inputValue ? inputValue.split('-')[1] : 0);
 
   const handleLeftChange = (value) => {
+    setTimeout(() => {
+      inputRef.current?.blur();
+      inputRef.current?.focus();
+    }, 100);
     setLeftValue(value);
     handleTextChange(`${value}-${rightValue}`);
   };
@@ -36,6 +42,12 @@ const InputD2 = ({ setFormData, inputValue, selectNextElement }) => {
     });
   };
 
+  const onInputSubmit = () => {
+    if (leftValue) {
+      selectNextElement();
+    }
+  };
+
   return (
     <View keyboardShouldPersistTaps="always" style={styles.container}>
       <Dropdown
@@ -47,10 +59,12 @@ const InputD2 = ({ setFormData, inputValue, selectNextElement }) => {
       ></Dropdown>
       <Text style={styles.dash}>-</Text>
       <TextInput
+        ref={inputRef}
         style={styles.input}
         value={rightValue}
         onChangeText={handleRightChange}
         keyboardType="numeric"
+        onSubmitEditing={onInputSubmit}
       />
     </View>
   );

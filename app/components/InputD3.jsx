@@ -7,6 +7,7 @@ import Dropdown from './Dropdown';
 
 const InputD3 = ({ setFormData, inputValue, selectNextElement }) => {
   const leftInputRef = useRef();
+  const rightInputRef = useRef();
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -16,19 +17,6 @@ const InputD3 = ({ setFormData, inputValue, selectNextElement }) => {
     };
 
     getData();
-    // InteractionManager.runAfterInteractions(() => {
-    //   if (leftInputRef?.current) {
-    //     leftInputRef.current.focus();
-    //   }
-    // });
-
-    // const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-    //   // selectNextElement();
-    // });
-
-    // return () => {
-    //   hideSubscription.remove();
-    // };
   }, []);
 
   const [leftValue, setLeftValue] = useState(inputValue ? inputValue.split('-')[0].slice(1) : 0);
@@ -46,6 +34,10 @@ const InputD3 = ({ setFormData, inputValue, selectNextElement }) => {
   };
 
   const handleDropdownChange = (text) => {
+    setTimeout(() => {
+      leftInputRef.current?.blur();
+      leftInputRef.current?.focus();
+    }, 100);
     setDropdownValue(text);
     handleTextChange(`${dropdownValue}${leftValue}-${dropdownValue}${rightValue}`);
   };
@@ -54,6 +46,19 @@ const InputD3 = ({ setFormData, inputValue, selectNextElement }) => {
     setFormData((prevState) => {
       return { ...prevState, D3: newText };
     });
+  };
+
+  const onLeftInputSubmit = () => {
+    setTimeout(() => {
+      rightInputRef.current?.blur();
+      rightInputRef.current?.focus();
+    }, 100);
+  };
+
+  const onRightInputSubmit = () => {
+    if (dropdownValue && leftValue) {
+      selectNextElement();
+    }
   };
 
   return (
@@ -74,14 +79,17 @@ const InputD3 = ({ setFormData, inputValue, selectNextElement }) => {
           keyboardType="numeric"
           autoFocus={true}
           placeholder={'Min'}
+          onSubmitEditing={onLeftInputSubmit}
         />
         <Text style={styles.dash}>-</Text>
         <TextInput
+          ref={rightInputRef}
           style={styles.input}
           value={rightValue}
           onChangeText={handleRightChange}
           keyboardType="numeric"
           placeholder={'Max'}
+          onSubmitEditing={onRightInputSubmit}
         />
       </View>
     </>

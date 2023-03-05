@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
+import { useRef } from 'react';
 import { useEffect } from 'react';
 import { TextInput, View, StyleSheet, Text } from 'react-native';
 import { Input } from 'react-native-elements';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
 
-const InputC2 = ({ setFormData, inputValue }) => {
+const InputC2 = ({ setFormData, inputValue, selectNextElement }) => {
   const [dropdownData, setData] = useState([]);
   const [selected, setSelected] = useState();
   const [number, setNumber] = useState('');
   const [afterFloatNumber, setAfterFloatNumber] = useState(0);
   const [error, setError] = useState('');
 
+  const leftInputRef = useRef();
+  const rightInputRef = useRef();
+
   useEffect(() => {
+    // setTimeout(() => {
+    //   leftInputRef.current?.blur();
+    //   leftInputRef.current?.focus();
+    // }, 100);
+
     const getData = async () => {
       const { data, error } = await CellData.getValues('C2');
 
@@ -36,6 +45,10 @@ const InputC2 = ({ setFormData, inputValue }) => {
   }, []);
 
   const handleDropdownSelect = (value) => {
+    setTimeout(() => {
+      leftInputRef.current?.blur();
+      leftInputRef.current?.focus();
+    }, 100);
     setSelected(value);
   };
 
@@ -70,6 +83,17 @@ const InputC2 = ({ setFormData, inputValue }) => {
     }
   };
 
+  const handleLeftInputSubmit = () => {
+    rightInputRef.current?.blur();
+    rightInputRef.current?.focus();
+  };
+
+  const handleRightInputSubmit = () => {
+    if (selected && number) {
+      selectNextElement();
+    }
+  };
+
   return (
     <View>
       <Dropdown
@@ -82,6 +106,7 @@ const InputC2 = ({ setFormData, inputValue }) => {
       <View style={styles.row}>
         <View style={styles.inputWrap}>
           <Input
+            ref={leftInputRef}
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.input}
             value={number}
@@ -91,6 +116,7 @@ const InputC2 = ({ setFormData, inputValue }) => {
             onChangeText={handleTextChange}
             onBlur={handleBlur}
             errorMessage={error}
+            onSubmitEditing={handleLeftInputSubmit}
           />
         </View>
 
@@ -100,6 +126,7 @@ const InputC2 = ({ setFormData, inputValue }) => {
 
         <View style={styles.inputWrap}>
           <Input
+            ref={rightInputRef}
             inputContainerStyle={styles.inputContainer}
             inputStyle={styles.input}
             value={afterFloatNumber}
@@ -107,6 +134,7 @@ const InputC2 = ({ setFormData, inputValue }) => {
             keyboardType="numeric"
             maxLength={2}
             onChangeText={handleSecondTextChange}
+            onSubmitEditing={handleRightInputSubmit}
           />
         </View>
       </View>

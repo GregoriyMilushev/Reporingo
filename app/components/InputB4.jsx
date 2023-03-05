@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
-import { InteractionManager, Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Input } from 'react-native-elements';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 const InputB4 = ({ setFormData, inputValue, selectNextElement }) => {
   const leftInputRef = useRef();
+  const midInputRef = useRef();
+  const rightInputRef = useRef();
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      if (leftInputRef?.current) {
-        leftInputRef.current.focus();
-      }
-    });
-
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      // selectNextElement();
-    });
-
-    return () => {
-      hideSubscription.remove();
-    };
+    setTimeout(() => {
+      leftInputRef.current?.blur();
+      leftInputRef.current?.focus();
+    }, 100);
   }, []);
 
   const [leftValue, setLeftValue] = useState(inputValue ? inputValue.split('-')[0] : 0);
@@ -49,6 +41,26 @@ const InputB4 = ({ setFormData, inputValue, selectNextElement }) => {
     });
   };
 
+  const handleLeftSubmit = () => {
+    setTimeout(() => {
+      midInputRef.current?.blur();
+      midInputRef.current?.focus();
+    }, 100);
+  };
+
+  const handleMidSubmit = () => {
+    setTimeout(() => {
+      rightInputRef.current?.blur();
+      rightInputRef.current?.focus();
+    }, 100);
+  };
+
+  const handleRightSubmit = () => {
+    if (leftValue && midValue) {
+      selectNextElement();
+    }
+  };
+
   return (
     <View keyboardShouldPersistTaps="always" style={styles.container}>
       <TextInput
@@ -59,22 +71,27 @@ const InputB4 = ({ setFormData, inputValue, selectNextElement }) => {
         keyboardType="numeric"
         autoFocus={true}
         maxLength={2}
+        onSubmitEditing={handleLeftSubmit}
       />
       <Text style={styles.dash}>-</Text>
       <TextInput
+        ref={midInputRef}
         style={styles.input}
         value={midValue}
         onChangeText={handleMidChange}
         keyboardType="numeric"
         maxLength={3}
+        onSubmitEditing={handleMidSubmit}
       />
       <Text style={styles.dash}>+</Text>
       <TextInput
+        ref={rightInputRef}
         style={styles.input}
         value={rightValue}
         onChangeText={handleRightChange}
         keyboardType="numeric"
         maxLength={2}
+        onSubmitEditing={handleRightSubmit}
       />
     </View>
   );

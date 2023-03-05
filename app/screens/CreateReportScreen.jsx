@@ -47,7 +47,7 @@ export default function CreateReportScreen({ navigation }) {
 
   useEffect(() => {
     resetForm();
-    setSelectedElement(null);
+    setSelectedElement('A1');
     if (reportData && Object.keys(reportData).length !== 0) {
       const newFormData = {};
       for (const data of Object.entries(reportData.report)) {

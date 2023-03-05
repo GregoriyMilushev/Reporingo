@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+import { useRef } from 'react';
 import { useEffect } from 'react';
 import { TextInput, View, StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
 
-const InputC1 = ({ setFormData, inputValue }) => {
+const InputC1 = ({ setFormData, inputValue, selectNextElement }) => {
   const [dropdownData, setData] = useState([]);
   const [selected, setSelected] = useState();
   const [number, setNumber] = useState('');
   const [error, setError] = useState('');
+
+  const inputRef = useRef();
 
   useEffect(() => {
     const getData = async () => {
@@ -30,6 +33,10 @@ const InputC1 = ({ setFormData, inputValue }) => {
   }, []);
 
   const handleDropdownSelect = (value) => {
+    setTimeout(() => {
+      inputRef.current?.blur();
+      inputRef.current?.focus();
+    }, 100);
     setSelected(value);
   };
 
@@ -50,6 +57,10 @@ const InputC1 = ({ setFormData, inputValue }) => {
     }
   };
 
+  const onInputSubmit = () => {
+    selectNextElement();
+  };
+
   return (
     <View>
       <Dropdown
@@ -59,6 +70,7 @@ const InputC1 = ({ setFormData, inputValue }) => {
         selected={selected}
       ></Dropdown>
       <Input
+        ref={inputRef}
         inputContainerStyle={styles.container}
         inputStyle={styles.input}
         value={number}
@@ -68,6 +80,7 @@ const InputC1 = ({ setFormData, inputValue }) => {
         onChangeText={handleTextChange}
         onBlur={handleBlur}
         errorMessage={error}
+        onSubmitEditing={onInputSubmit}
       />
     </View>
   );
