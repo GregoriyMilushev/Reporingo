@@ -28,7 +28,7 @@ export default function Avatar({ url, size = 150, onUpload }) {
       };
     } catch (error) {
       if (error instanceof Error) {
-        console.log('Error downloading image: ', error.message);
+        console.error('Error downloading image: ', error.message);
       }
     }
   }
@@ -45,7 +45,6 @@ export default function Avatar({ url, size = 150, onUpload }) {
       quality: 1,
     });
 
-    console.log(photo);
     if (!photo.canceled) {
       const fileName = photo.assets[0].uri.substring(photo.assets[0].uri.lastIndexOf('/') + 1);
 

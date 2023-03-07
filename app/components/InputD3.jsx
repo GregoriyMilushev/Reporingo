@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
-import { InteractionManager, Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Input } from 'react-native-elements';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
 
@@ -39,7 +38,7 @@ const InputD3 = ({ setFormData, inputValue, selectNextElement }) => {
       leftInputRef.current?.focus();
     }, 100);
     setDropdownValue(text);
-    handleTextChange(`${dropdownValue}${leftValue}-${dropdownValue}${rightValue}`);
+    handleTextChange(`${text}${leftValue}-${text}${rightValue}`);
   };
 
   const handleTextChange = (newText) => {
@@ -77,7 +76,6 @@ const InputD3 = ({ setFormData, inputValue, selectNextElement }) => {
           value={leftValue}
           onChangeText={handleLeftChange}
           keyboardType="numeric"
-          autoFocus={true}
           placeholder={'Min'}
           onSubmitEditing={onLeftInputSubmit}
         />

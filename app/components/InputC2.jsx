@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { TextInput, View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
@@ -17,11 +17,6 @@ const InputC2 = ({ setFormData, inputValue, selectNextElement }) => {
   const rightInputRef = useRef();
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   leftInputRef.current?.blur();
-    //   leftInputRef.current?.focus();
-    // }, 100);
-
     const getData = async () => {
       const { data, error } = await CellData.getValues('C2');
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { TextInput, StyleSheet } from 'react-native';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
 
@@ -32,14 +31,5 @@ const InputB3 = ({ setFormData, inputValue, selectNextElement }) => {
     ></Dropdown>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    marginVertical: 10,
-  },
-});
 
 export default InputB3;

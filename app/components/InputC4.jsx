@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { TextInput, View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
