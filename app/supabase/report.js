@@ -15,7 +15,10 @@ async function update(id, report) {
 }
 
 async function getAll() {
-  let { data: reports, error } = await supabase.from('reports').select('*');
+  let { data: reports, error } = await supabase
+    .from('reports')
+    .select('*')
+    .order('created_at', { ascending: false });
 
   return parseReports(reports);
 }

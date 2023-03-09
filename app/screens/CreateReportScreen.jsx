@@ -62,8 +62,23 @@ export default function CreateReportScreen({ navigation }) {
     setText(newText);
   };
 
-  const selectImage = (image) => {
+  const selectImage = async (image) => {
     setImage(image);
+    if (image) {
+      const imageUrl = await Storage.uploadImage(image);
+
+      if (!imageUrl) {
+        Alert.alert('There was an error uploading the image. Please try again.');
+        return;
+      }
+
+      setFormData((prevState) => {
+        return {
+          ...prevState,
+          imageUrl: imageUrl.publicUrl,
+        };
+      });
+    }
   };
 
   const resetForm = () => {
@@ -90,23 +105,6 @@ export default function CreateReportScreen({ navigation }) {
 
   const onSubmit = async () => {
     setLoading(true);
-    let imageUrl;
-    if (image) {
-      imageUrl = await Storage.uploadImage(image);
-
-      if (!imageUrl) {
-        Alert.alert('There was an error uploading the image. Please try again.');
-        return;
-      }
-
-      setFormData((prevState) => {
-        return {
-          ...prevState,
-          imageUrl,
-        };
-      });
-    }
-
     // this navigates to SingleReport, where report is confirmed.
     navigation.navigate('SingleReport', {
       toBeConfirmed: true,
