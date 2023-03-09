@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRef } from 'react';
-import { InteractionManager, Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Input } from 'react-native-elements';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 const InputA3 = ({ setFormData, inputValue, selectNextElement }) => {
   const leftInputRef = useRef();
@@ -14,8 +13,8 @@ const InputA3 = ({ setFormData, inputValue, selectNextElement }) => {
     }, 100);
   }, []);
 
-  const [leftValue, setLeftValue] = useState(inputValue ? inputValue.split('-')[0] : 0);
-  const [rightValue, setRightValue] = useState(inputValue ? inputValue.split('-')[1] : 0);
+  const [leftValue, setLeftValue] = useState(inputValue ? inputValue.split('-')[0] : '');
+  const [rightValue, setRightValue] = useState(inputValue ? inputValue.split('-')[1] : '');
 
   const handleLeftChange = (text) => {
     setLeftValue(text);
@@ -48,7 +47,7 @@ const InputA3 = ({ setFormData, inputValue, selectNextElement }) => {
       <TextInput
         ref={leftInputRef}
         style={styles.input}
-        value={leftValue}
+        value={leftValue.toString()}
         onChangeText={handleLeftChange}
         keyboardType="numeric"
         autoFocus={true}
@@ -58,7 +57,7 @@ const InputA3 = ({ setFormData, inputValue, selectNextElement }) => {
       <TextInput
         ref={rightInputRef}
         style={styles.input}
-        value={rightValue}
+        value={rightValue.toString()}
         onChangeText={handleRightChange}
         keyboardType="numeric"
         onSubmitEditing={handleRightSubmit}

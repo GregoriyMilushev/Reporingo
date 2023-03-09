@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { TextInput, StyleSheet } from 'react-native';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
 
@@ -32,7 +31,5 @@ const InputA4 = ({ setFormData, inputValue, selectNextElement }) => {
     ></Dropdown>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default InputA4;

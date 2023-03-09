@@ -28,7 +28,7 @@ export default function Avatar({ url, size = 150, onUpload }) {
       };
     } catch (error) {
       if (error instanceof Error) {
-        console.log('Error downloading image: ', error.message);
+        console.error('Error downloading image: ', error.message);
       }
     }
   }

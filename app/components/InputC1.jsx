@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Input } from 'react-native-elements';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
@@ -93,12 +93,7 @@ const InputC1 = ({ setFormData, inputValue, selectNextElement }) => {
 
 const styles = StyleSheet.create({
   input: {
-    // borderWidth: 1,
-    // borderColor: '#ccc',
-    // backgroundColor: '#fff',
     padding: 10,
-    // borderRadius: 5,
-    // marginVertical: 10,
   },
   container: {
     backgroundColor: '#fff',

@@ -29,8 +29,6 @@ const CreateForm = ({ selectedElement, setSelectedElement, formData, setFormData
     const [letter, numberStr] = selectedElement.split('');
     const number = Number(numberStr);
 
-    console.log(letter, number);
-
     if (number < 4) {
       setSelectedElement(`${letter}${number + 1}`);
     } else if (letter === 'A' || letter === 'B' || letter === 'C') {

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { InteractionManager, Keyboard, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Input } from 'react-native-elements';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import CellData from '../supabase/cellData';
 import Dropdown from './Dropdown';
 
@@ -18,7 +17,7 @@ const InputB2 = ({ setFormData, inputValue, selectNextElement }) => {
   }, []);
 
   const [leftValue, setLeftValue] = useState(inputValue ? inputValue.split('-')[0] : '');
-  const [rightValue, setRightValue] = useState(inputValue ? inputValue.split('-')[1] : 0);
+  const [rightValue, setRightValue] = useState(inputValue ? inputValue.split('-')[1] : '');
 
   const handleLeftChange = (value) => {
     setTimeout(() => {
@@ -72,7 +71,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
   },
-  inputContent: {},
 
   input: {
     width: 105,
