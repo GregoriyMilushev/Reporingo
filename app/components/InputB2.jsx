@@ -17,7 +17,7 @@ const InputB2 = ({ setFormData, inputValue, selectNextElement }) => {
   }, []);
 
   const [leftValue, setLeftValue] = useState(inputValue ? inputValue.split('-')[0] : '');
-  const [rightValue, setRightValue] = useState(inputValue ? inputValue.split('-')[1] : 0);
+  const [rightValue, setRightValue] = useState(inputValue ? inputValue.split('-')[1] : '');
 
   const handleLeftChange = (value) => {
     setTimeout(() => {
@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
   },
-  inputContent: {},
 
   input: {
     width: 105,

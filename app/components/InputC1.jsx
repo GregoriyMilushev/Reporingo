@@ -93,12 +93,7 @@ const InputC1 = ({ setFormData, inputValue, selectNextElement }) => {
 
 const styles = StyleSheet.create({
   input: {
-    // borderWidth: 1,
-    // borderColor: '#ccc',
-    // backgroundColor: '#fff',
     padding: 10,
-    // borderRadius: 5,
-    // marginVertical: 10,
   },
   container: {
     backgroundColor: '#fff',

@@ -14,7 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -30,9 +32,11 @@
     },
     "extra": {
       "eas": {
-        "projectId": "5bf0e889-a25f-4f22-b8b9-89ad75fc29f5"
+        "projectId": "adc46578-ca84-4257-99e2-1dc9cfc9f015"
       }
     }
   },
-  "plugins": ["expo-image-picker"]
+  "plugins": [
+    "expo-image-picker"
+  ]
 }

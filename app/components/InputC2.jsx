@@ -149,16 +149,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
   },
-  // dot: {
-  //   color: '#fff',
-  //   fontSize: 34,
-  //   marginHorizontal: 10,
-  //   // flex: 1,
-  //   alignSelf: 'center',
-  // },
-  // dotWrap: {
-  //   flex: 0.1,
-  // },
 
   row: {
     flex: 1,
