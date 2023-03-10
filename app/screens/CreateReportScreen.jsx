@@ -1,4 +1,4 @@
-import { useState, useEffect, useF } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Alert,
   KeyboardAvoidingView,
