@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Report from '../supabase/report';
 import { useRoute } from '@react-navigation/native';
 import { formatDateForUI } from '../assets/helpers';
+import axios from 'axios';
 
 export default function SingleReportScreen({ navigation }) {
   const route = useRoute();
@@ -11,6 +12,7 @@ export default function SingleReportScreen({ navigation }) {
   const [report, setReport] = useState(null);
   const editButtonText = 'Edit';
   const confirmButtonText = 'Confirm';
+  const sendToViberButtonText = 'Send to Viber';
 
   useEffect(() => {
     navigation.setParams({ name: '' });
@@ -51,14 +53,14 @@ export default function SingleReportScreen({ navigation }) {
     }
   };
 
-  let ButtonComponent = (title) => {
+  let ButtonComponent = (title, onPress = null) => {
     return (
       <Button
         title={title}
         buttonStyle={styles.button}
         containerStyle={styles.buttonContainer}
-        onPress={title == editButtonText ? onEditPress : onConfirmPress}
-      ></Button>
+        onPress={onPress ? onPress : title == editButtonText ? onEditPress : onConfirmPress}
+      />
     );
   };
 
@@ -68,6 +70,40 @@ export default function SingleReportScreen({ navigation }) {
     const data3 = report.report?.[`${type}3`] || '';
     const data4 = report.report?.[`${type}4`] || '';
     return `${data1}/${data2}/${data3}/${data4}`;
+  };
+
+  // Send reports to Viber bot
+  const onSendToViberPress = async () => {
+    try {
+      const { imageUrl, ...filteredReport } = report;
+      const newReport = {
+        text: {
+          A: getRow(report, 'A'),
+          B: getRow(report, 'B'),
+          C: getRow(report, 'C'),
+          D: getRow(report, 'D'),
+          Comment: report.report.comment ? report.report.comment : 'None',
+        },
+        // Wip: Place empty image placeholder in case of null image
+        image: {
+          imageUrl: report.report.imageUrl
+            ? report.report.imageUrl
+            : 'https://picsum.photos/200/300',
+        },
+      };
+      // Caution: Addres must be of Viber API Node, token need to be for reportingo chatbot acount
+      const response = await axios.post('http://192.168.0.105:6969/viber/send', newReport, {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Viber-Auth-Token': '509ac2a201a7dfdc-9c44cd0527f56e92-182ae14d7ed8f8a6',
+        },
+      });
+      console.log(response.data);
+      Alert.alert('Report sent to Viber successfully.');
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Failed to send report to Viber. Please try again.');
+    }
   };
 
   return (
@@ -91,9 +127,13 @@ export default function SingleReportScreen({ navigation }) {
               <>
                 {ButtonComponent(editButtonText)}
                 {ButtonComponent(confirmButtonText)}
+                {ButtonComponent(sendToViberButtonText, onSendToViberPress)}
               </>
             ) : (
-              <>{ButtonComponent(editButtonText)}</>
+              <>
+                {ButtonComponent(editButtonText)}
+                {ButtonComponent(sendToViberButtonText, onSendToViberPress)}
+              </>
             )}
           </View>
         </>
