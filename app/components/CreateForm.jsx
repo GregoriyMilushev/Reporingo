@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import InputA1 from './InputA1';
 import InputA2 from './InputA2';
 import InputA3 from './InputA3';

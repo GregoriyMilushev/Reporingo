@@ -8,18 +8,14 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import Dropdown from '../components/Dropdown';
 import { Button } from 'react-native-elements';
 import SelectImage from '../components/ImagePicker';
-import Report from '../supabase/report';
 import Storage from '../supabase/storage';
 import CreateForm from '../components/CreateForm';
 import { useRoute } from '@react-navigation/native';
 
 export default function CreateReportScreen({ navigation }) {
   const route = useRoute();
-  const [image, setImage] = useState(undefined);
-  const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
   const [selectedElement, setSelectedElement] = useState(null);
   const { reportData = null } = route.params || {};
@@ -58,12 +54,7 @@ export default function CreateReportScreen({ navigation }) {
     }
   }, [reportData]);
 
-  const handleTextChange = (newText) => {
-    setText(newText);
-  };
-
   const selectImage = async (image) => {
-    setImage(image);
     if (image) {
       const imageUrl = await Storage.uploadImage(image);
 

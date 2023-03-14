@@ -6,13 +6,6 @@ import * as FileSystem from 'expo-file-system';
 
 const SelectImage = ({ onChange }) => {
   const pickImageFromGallery = async () => {
-    // Give Access to phone galery
-    // let { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    // if (status !== 'granted') {
-    //   alert('Sorry, we need media library permissions to make this work!');
-    //   return;
-    // }
-
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,

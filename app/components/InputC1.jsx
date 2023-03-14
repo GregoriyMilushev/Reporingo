@@ -15,11 +15,6 @@ const InputC1 = ({ setFormData, inputValue, selectNextElement }) => {
   const inputRef = useRef();
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   inputRef.current?.blur();
-    //   inputRef.current?.focus();
-    // }, 100);
-
     const getData = async () => {
       const { data, error } = await CellData.getValues('C1');
 
