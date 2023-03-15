@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react';
-import {
-  Alert,
-  KeyboardAvoidingView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import { Button } from 'react-native-elements';
+import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Button, Image } from 'react-native-elements';
 import SelectImage from '../components/ImagePicker';
 import Storage from '../supabase/storage';
 import CreateForm from '../components/CreateForm';
@@ -17,6 +9,7 @@ import { useRoute } from '@react-navigation/native';
 export default function CreateReportScreen({ navigation }) {
   const route = useRoute();
   const [loading, setLoading] = useState(false);
+  const [image, setImage] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
   const { reportData = null } = route.params || {};
 
@@ -62,7 +55,7 @@ export default function CreateReportScreen({ navigation }) {
         Alert.alert('There was an error uploading the image. Please try again.');
         return;
       }
-
+      setImage(imageUrl.publicUrl);
       setFormData((prevState) => {
         return {
           ...prevState,
@@ -119,6 +112,7 @@ export default function CreateReportScreen({ navigation }) {
           <Text style={styles.label}>Image label</Text>
           <SelectImage onChange={selectImage}></SelectImage>
         </View>
+        <Image source={{ uri: image }} style={styles.image} resizeMode="contain"></Image>
       </ScrollView>
 
       <Button
@@ -184,4 +178,9 @@ const styles = StyleSheet.create({
   },
 
   imagePicker: { height: 60, width: '95%', alignSelf: 'center', paddingBottom: 10 },
+
+  image: {
+    margin: 30,
+    height: 300,
+  },
 });
