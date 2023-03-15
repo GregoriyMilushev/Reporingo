@@ -9,7 +9,6 @@ import { useRoute } from '@react-navigation/native';
 export default function CreateReportScreen({ navigation }) {
   const route = useRoute();
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
   const { reportData = null } = route.params || {};
 
@@ -55,7 +54,6 @@ export default function CreateReportScreen({ navigation }) {
         Alert.alert('There was an error uploading the image. Please try again.');
         return;
       }
-      setImage(imageUrl.publicUrl);
       setFormData((prevState) => {
         return {
           ...prevState,
@@ -112,7 +110,11 @@ export default function CreateReportScreen({ navigation }) {
           <Text style={styles.label}>Image label</Text>
           <SelectImage onChange={selectImage}></SelectImage>
         </View>
-        <Image source={{ uri: image }} style={styles.image} resizeMode="contain"></Image>
+        <Image
+          source={{ uri: formData.imageUrl }}
+          style={styles.image}
+          resizeMode="contain"
+        ></Image>
       </ScrollView>
 
       <Button
