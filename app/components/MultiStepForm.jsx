@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import FormFirstStep from './FormFirstStep';
 import FormIndicator from './FormIndicator';
 import FormSecondStep from './FormSecondStep';
+import FormThirdStep from './FormThirdStep';
 
 const MultiStepForm = () => {
   const [currentFormStep, setCurrentFormStep] = useState(1);
@@ -26,6 +27,7 @@ const MultiStepForm = () => {
       <FormIndicator number={currentFormStep}></FormIndicator>
       {currentFormStep === 1 ? <FormFirstStep></FormFirstStep> : ''}
       {currentFormStep === 2 ? <FormSecondStep></FormSecondStep> : ''}
+      {currentFormStep === 3 ? <FormThirdStep></FormThirdStep> : ''}
       <View style={styles.buttonContainer}>
         {currentFormStep === 1 ? (
           <TouchableOpacity style={[styles.button, styles.exitButton]} onPress={handleExit}>

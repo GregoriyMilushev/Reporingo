@@ -13,6 +13,10 @@ export default function OptionInput({
   handleModalOpen,
   showLabel,
 }) {
+  if (showLabel === undefined) {
+    showLabel = true;
+  }
+
   return (
     <>
       <OptionModal
