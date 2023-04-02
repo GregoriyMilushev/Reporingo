@@ -30,7 +30,7 @@ export default function CreateReportScreen({ navigation }) {
     D3: null,
     D4: null,
     comment: null,
-    imageUrl: null,
+    images: null,
   });
 
   useEffect(() => {

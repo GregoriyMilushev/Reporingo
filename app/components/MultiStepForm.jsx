@@ -1,13 +1,35 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import FormFifthStep from './FormFifthStep';
 import FormFirstStep from './FormFirstStep';
 import FormFourthStep from './FormFourthStep';
 import FormIndicator from './FormIndicator';
 import FormSecondStep from './FormSecondStep';
+import FormSixthStep from './FormSixthStep';
 import FormThirdStep from './FormThirdStep';
 
 const MultiStepForm = () => {
   const [currentFormStep, setCurrentFormStep] = useState(1);
+  const [formData, setFormData] = useState({
+    A1: null,
+    A2: null,
+    A3: null,
+    A4: null,
+    B1: null,
+    B2: null,
+    B3: null,
+    B4: null,
+    C1: null,
+    C2: null,
+    C3: null,
+    C4: null,
+    D1: null,
+    D2: null,
+    D3: null,
+    D4: null,
+    comment: null,
+    images: null,
+  });
 
   const handleExit = () => {
     // TODO: Handle exit button press
@@ -30,6 +52,8 @@ const MultiStepForm = () => {
       {currentFormStep === 2 ? <FormSecondStep></FormSecondStep> : ''}
       {currentFormStep === 3 ? <FormThirdStep></FormThirdStep> : ''}
       {currentFormStep === 4 ? <FormFourthStep></FormFourthStep> : ''}
+      {currentFormStep === 5 ? <FormFifthStep></FormFifthStep> : ''}
+      {currentFormStep === 6 ? <FormSixthStep></FormSixthStep> : ''}
       <View style={styles.buttonContainer}>
         {currentFormStep === 1 ? (
           <TouchableOpacity style={[styles.button, styles.exitButton]} onPress={handleExit}>

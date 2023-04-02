@@ -1,30 +1,16 @@
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { TextInput } from 'react-native';
+
 import { Text } from 'react-native';
 import { View } from 'react-native';
+
 import OptionInput from './OptionInput';
 
-export default function FormFirstStep() {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const handleOptionSelect = (option) => {
-    setSelectedOption(option);
-    setModalVisible(false);
-  };
-
-  const handleModalClose = () => {
-    setModalVisible(false);
-  };
-
-  const handleModalOpen = () => {
-    setModalVisible(true);
-  };
-
+export default function FormSixthStep() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Job Data</Text>
+      <Text style={styles.title}>Review</Text>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Drill Rig</Text>
         <TextInput style={styles.input} />
@@ -39,13 +25,6 @@ export default function FormFirstStep() {
       </View>
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Shift</Text>
-        <OptionInput
-          selected={selectedOption}
-          handleOptionSelect={handleOptionSelect}
-          handleModalClose={handleModalClose}
-          modalVisible={modalVisible}
-          handleModalOpen={handleModalOpen}
-        ></OptionInput>
       </View>
     </View>
   );

@@ -5,7 +5,7 @@ import { Text } from 'react-native';
 import { View } from 'react-native';
 import OptionInput from './OptionInput';
 
-export default function FormFirstStep() {
+export default function FormFifthStep() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -24,28 +24,13 @@ export default function FormFirstStep() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Job Data</Text>
+      <Text style={styles.title}>Additional Info</Text>
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Drill Rig</Text>
-        <TextInput style={styles.input} />
+        <Text style={styles.label}>Comment</Text>
+        <TextInput multiline={true} numberOfLines={4} style={[styles.input, styles.area]} />
       </View>
       <View style={styles.inputContainer}>
-        <Text style={styles.label}>Borehole</Text>
-        <TextInput style={styles.input} />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Branch</Text>
-        <TextInput style={styles.input} />
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Shift</Text>
-        <OptionInput
-          selected={selectedOption}
-          handleOptionSelect={handleOptionSelect}
-          handleModalClose={handleModalClose}
-          modalVisible={modalVisible}
-          handleModalOpen={handleModalOpen}
-        ></OptionInput>
+        <Text style={styles.label}>Photos</Text>
       </View>
     </View>
   );
@@ -97,5 +82,8 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  area: {
+    textAlignVertical: 'top',
   },
 });
