@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import FormFirstStep from './FormFirstStep';
+import FormFourthStep from './FormFourthStep';
 import FormIndicator from './FormIndicator';
 import FormSecondStep from './FormSecondStep';
 import FormThirdStep from './FormThirdStep';
@@ -28,6 +29,7 @@ const MultiStepForm = () => {
       {currentFormStep === 1 ? <FormFirstStep></FormFirstStep> : ''}
       {currentFormStep === 2 ? <FormSecondStep></FormSecondStep> : ''}
       {currentFormStep === 3 ? <FormThirdStep></FormThirdStep> : ''}
+      {currentFormStep === 4 ? <FormFourthStep></FormFourthStep> : ''}
       <View style={styles.buttonContainer}>
         {currentFormStep === 1 ? (
           <TouchableOpacity style={[styles.button, styles.exitButton]} onPress={handleExit}>
