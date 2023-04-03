@@ -39,8 +39,8 @@ export default function FormFourthStep() {
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Torque</Text>
         <View style={styles.torqueInputs}>
-          <TextInput placeholder="MIN" style={[styles.input, styles.torqueInput, styles.text]} />
-          <TextInput placeholder="MAX" style={[styles.input, styles.torqueInput, styles.text]} />
+          <TextInput placeholder="MIN" style={[styles.input, styles.torqueInput]} />
+          <TextInput placeholder="MAX" style={[styles.input, styles.torqueInput]} />
         </View>
       </View>
       <View style={styles.inputContainer}>
@@ -51,11 +51,6 @@ export default function FormFourthStep() {
   );
 }
 const styles = StyleSheet.create({
-  text: {
-    fontFamily: 'Lato-Regular',
-    fontSize: 16,
-    lineHeight: 24,
-  },
   container: {
     flex: 1,
     padding: 16,
